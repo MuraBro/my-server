@@ -5,11 +5,12 @@ const output = document.getElementById("output");
 let countupper = 0;
 let informer = [441, 442, 443, 444, 445, 446, 447, 448, 449, 450];
 button.disabled = true;
+let info = 440
 
 // 接続確認
 ws.onopen = () => {
   console.log("接続成功");
-  button.disabled = true;
+  button.disabled = false;
     alert('Setup Complete!');
 };
 
