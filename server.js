@@ -3,6 +3,7 @@ const fs = require('fs');
 const WebSocket = require('ws');
 
 const port = process.env.PORT || 3000;
+const path = require('path');
 const ext = path.extname(filePath);
 const contentType = {
   '.html': 'text/html',
