@@ -13,7 +13,7 @@ ws.onopen = () => {
 ws.onmessage = (event) => {
   console.log("受信:", event.data);
   
-  info = event.data.split(',');
+  info = event.data
   output.textContent = info;
 };
 
@@ -36,7 +36,7 @@ ws.onerror = (e) => {
 
 //ここからコード
 const button = document.getElementById('button');
-let trainnum = '442, 443';
+let trainnum = '442,443';
 const countup = () => {
     ws.send(trainnum);
 }
