@@ -2,10 +2,12 @@ const ws = new WebSocket("wss://my-server-ja61.onrender.com");
 const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
-let countupper = 0;
+let localcount = 0;
 let informer = [441, 442, 443, 444, 445, 446, 447, 448, 449, 450];
 button.disabled = true;
-let info = 440
+let info = '440,720' //初期値
+let infolist = [];
+const myid = prompt('Enter the "System Code" on the timetable paper.');
 
 // 接続確認
 ws.onopen = () => {
@@ -20,6 +22,7 @@ ws.onmessage = (event) => {
   
   info = event.data
   output.textContent = info;
+  infolist = info.split(',');
 };
 
 // 送信
@@ -42,7 +45,14 @@ ws.onerror = (e) => {
 //ここからコード
 
 const countup = () => {
-    ws.send(informer[countupper]);
-    countupper++;
+    if(localcount !== 0) {
+    let sendmemom = [...infolist];
+    sendmemom[myid] = String(Number(sendmemom[myid]) + 1);
+    let tomatoma = sendmemom.join(',');
+    ws.send(tomatoma);
+    localcount++;
+    } else {
+        ws.send('440,720');
+    }
 }
 button.addEventListener('click', countup);
