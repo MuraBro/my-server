@@ -1,35 +1,39 @@
 const http = require('http');
 const fs = require('fs');
+const path = require('path');
 const WebSocket = require('ws');
 
 const port = process.env.PORT || 3000;
-const path = require('path');
-const ext = path.extname(filePath);
-const contentType = {
-  '.html': 'text/html',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.css': 'text/css',
-  '.js': 'application/javascript'
-}[ext] || 'text/plain';
-
-
 
 // HTTPサーバー
 const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    fs.readFile("index.html", (err, data) => {
-      if (err) {
-        res.writeHead(500);
-        return res.end("Error loading file");
-      }
-      res.writeHead(200, { "Content-Type": contentType });
-      res.end(data);
-    });
-  }
+
+  let filePath = '.' + req.url;
+  if (filePath === './') filePath = './index.html';
+
+  // ★ここに入れる！！
+  const ext = path.extname(filePath);
+
+  const contentType = {
+    '.html': 'text/html',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.css': 'text/css',
+    '.js': 'application/javascript'
+  }[ext] || 'text/plain';
+
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      res.writeHead(404);
+      return res.end('Not found');
+    }
+    res.writeHead(200, { 'Content-Type': contentType });
+    res.end(data);
+  });
+
 });
 
-// WebSocketサーバー
+// WebSocket
 const wss = new WebSocket.Server({ server });
 
 let sharedText = "";
@@ -49,5 +53,5 @@ wss.on('connection', (ws) => {
 });
 
 server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log("Server running");
 });
