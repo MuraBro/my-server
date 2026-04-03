@@ -4,6 +4,16 @@ const WebSocket = require('ws');
 
 const port = process.env.PORT || 3000;
 
+const contentType = {
+  '.html': 'text/html',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.css': 'text/css',
+  '.js': 'application/javascript'
+}[ext] || 'text/plain';
+
+
+
 // HTTPサーバー
 const server = http.createServer((req, res) => {
   if (req.url === "/") {
@@ -12,7 +22,7 @@ const server = http.createServer((req, res) => {
         res.writeHead(500);
         return res.end("Error loading file");
       }
-      res.writeHead(200, { "Content-Type": "text/html" });
+      res.writeHead(200, { "Content-Type": contentType });
       res.end(data);
     });
   }
