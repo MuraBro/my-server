@@ -2,6 +2,7 @@ const ws = new WebSocket("wss://my-server-ja61.onrender.com");
 const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
+const localshower = document.getElementById("localcount");
 let localcount = 0;
 let informer = [441, 442, 443, 444, 445, 446, 447, 448, 449, 450];
 button.disabled = true;
@@ -53,6 +54,9 @@ const countup = () => {
     localcount++;
     } else {
         ws.send('440,720');
+        localcount = 1;
+        
     }
+    localshower.textContent = localcount;
 }
 button.addEventListener('click', countup);
