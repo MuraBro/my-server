@@ -1,4 +1,8 @@
-const ws = new WebSocket("wss://my-server-ja61.onrender.com");
+let ws;
+function connect() {
+    ws = new WebSocket("wss://my-server-ja61.onrender.com");
+}
+connect();
 const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
@@ -11,7 +15,7 @@ let stationnum = 0;
 let boundfor = 0;
 let mode = 0;
 button.disabled = true;
-let info = '440,720' //初期値
+let info = '440,720, 551, 278, 965' //初期値
 let infolist = [];
 
 //定義領域
@@ -50,10 +54,17 @@ boundshower.textContent = boundfor;
 
 // 接続確認
 ws.onopen = () => {
-  console.log("接続成功");
+  console.log("Activated Completely");
   button.disabled = false;
     alert('Setup Complete!');
 };
+
+//自動再接続
+ws.onclose = () => {
+    console.log("Reactivating Now...");
+    alert("We'll reactivate soon");
+    setTimeout(connect, 1000); // 1秒後再接続
+  };
 
 // 受信
 ws.onmessage = (event) => {
@@ -85,10 +96,15 @@ const countup = () => {
     let sendmemom = [...infolist];
     sendmemom[choker] = String(Number(sendmemom[choker]) + 1);
     let tomatoma = sendmemom.join(',');
-    ws.send(tomatoma);
+    if (ws.readyState === WebSocket.OPEN) {
+        ws.send(tomatoma);
+      } else {
+        alert("Connection Stopped");
+      }
+    
     localcount++;
     } else {
-        ws.send('440,720');
+        ws.send('440,720, 551, 278, 965');
         localcount = 1;
         
     }
