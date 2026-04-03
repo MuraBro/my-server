@@ -1,12 +1,21 @@
 const http = require('http');
+const fs = require('fs');
 const WebSocket = require('ws');
 
-const port = process.env.PORT || 3000; //ここが大事
+const port = process.env.PORT || 3000;
 
 // HTTPサーバー
 const server = http.createServer((req, res) => {
-  res.writeHead(200);
-  res.end("Server is running");
+  if (req.url === "/") {
+    fs.readFile("index.html", (err, data) => {
+      if (err) {
+        res.writeHead(500);
+        return res.end("Error loading file");
+      }
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(data);
+    });
+  }
 });
 
 // WebSocketサーバー
