@@ -15,12 +15,24 @@ ws.onmessage = (event) => {
 };
 
 // 送信
-input.addEventListener("input", () => {
+/*input.addEventListener("input", () => {
   console.log("送信:", input.value);
   ws.send(input.value);
-});
+});*/
 
 // エラー確認
 ws.onerror = (e) => {
   console.log("エラー", e);
 };
+
+
+
+
+
+//ここからコード
+const button = document.getElementById('button');
+let trainnum = 441;
+const countup = () => {
+    trainnum++;
+    ws.send(trainnum);
+}
