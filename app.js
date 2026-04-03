@@ -10,7 +10,7 @@ let systemcode = 9999;
 let mode = 9999; //駅１　車庫２　総合指令３
 let stationnum = 9999;
 let boundfor = 9999; //方向　１伏見２豊田市
-let stationname = 'きさらぎ駅';
+let stationname = 'Kisaragi sta';
 let whetherexp = 9999; //1停車　０通過
 let trainnum = 9999;
 let traindest = 9999;
@@ -19,7 +19,7 @@ let trainexlc = 9999;
 let traindept = 9999;
 let sendingpot = 0;
 const stationlist = {
-    station:['伏見', '大須観音', '上前津', '鶴舞', '荒畑', '御器所', '川名', 'いりなか', '八事', '塩釜口', '植田', '原', '平針', '赤池', '日進', '米野木', '黒笹', '三好ヶ丘', '浄水', '上豊田', '梅坪', '豊田市'],
+    station:['Fushimi', 'Osu-Kannon', 'Kamimaezu', 'Tsurumai', 'Arahata', 'Gokiso', 'Kawana', 'Irinaka', 'Yagoto', 'Shiogama-Guchi', 'Ueda', 'Hara', 'Hirabari', 'Akaike', 'Nisshin', 'Komenoki', 'KUrosasa', 'Miyoshigaoka', 'Josui', 'Kamitoyota', 'Umetsubo', 'Toyotashi'],
 }
 const timetable = {
      num:[441,  442,  443,  444],
@@ -50,21 +50,21 @@ ws.onmessage = (event) => {
 
 //プログラム
 const translatewhetherrxp = (ay) => {
-    if(ay === 0) return '急行は 通過 します';
-    if(ay === 1) return '急行は 停車 します';
+    if(ay === 0) return 'Stop: Local';
+    if(ay === 1) return 'Stop: Exp & Local';
 }
 
 const translatemodenum = (ay) => {
-    if(ay === 1) return '駅';
-    if(ay === 2) return '車両留置';
-    if(ay === 3) return '総合指令';
+    if(ay === 1) return 'Station';
+    if(ay === 2) return 'Garage';
+    if(ay === 3) return 'Instructions';
 }
 const translateboundfor = (ay) => {
-    if(ay === '1') return '伏見方面';
-    if(ay === '2') return '豊田市方面';
+    if(ay === '1') return 'For Fushimi';
+    if(ay === '2') return 'For Toyotashi';
 }
 const startsetup = () => {
-    systemcode = prompt('時刻表に記載されている機器管理番号を入力してください');
+    systemcode = prompt('Machine Code');
     if(Number(systemcode) !== 70 && Number(systemcode) < 300) {
         mode = 1
         stationnum = systemcode[0] + systemcode[1];
@@ -84,7 +84,7 @@ const startsetup = () => {
         boundfor = systemcode[2];
     } else if(systemcode === '70') {
         mode = 37
-        stationname = '総合指令';
+        stationname = 'Instructions';
     }
 
     nameshower.textContent = stationname;
@@ -95,18 +95,18 @@ const startsetup = () => {
     console.log(stationnum + stationname + systemcode + mode);
 }
 const translateexlc = (ay) => {
-    if(ay === 0) return '普通';
-    if(ay === 1) return '急行';
+    if(ay === 0) return 'Local';
+    if(ay === 1) return 'Exp';
 }
 const distinguishstoppass = (traincodea) => {
     if(timetable.exlc[timetable.num.indexOf(traincodea)] === 0 || (timetable.exlc[timetable.num.indexOf(traincodea)] === 1 && whetherexp === 1)) {
-        return '【停車】';
+        return '【Stop】';
     } else {
-        return '【--通過--】'
+        return '【--Pass--】'
     }
 }
 const reloadnexttrain = () => {
-    traincode.textContent = distinguishstoppass(trainnum) + '列番' + trainnum + ' 発車時刻' + timetable.time[timetable.num.indexOf(trainnum)] + ' ' + translateexlc(timetable.exlc[timetable.num.indexOf(trainnum)])+ ' ' + stationlist.station[timetable.dest[timetable.num.indexOf(trainnum)] - 1] + 'ゆき';
+    traincode.textContent = distinguishstoppass(trainnum) + 'No.' + trainnum + ' Departures at' + timetable.time[timetable.num.indexOf(trainnum)] + ' ' + translateexlc(timetable.exlc[timetable.num.indexOf(trainnum)])+ ' Bound for' + stationlist.station[timetable.dest[timetable.num.indexOf(trainnum)] - 1] + '';
 }
 button.addEventListener('click', () => {
     trainnum++;
