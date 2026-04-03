@@ -1,15 +1,15 @@
 const ws = new WebSocket("wss://my-server-ja61.onrender.com");
-
+const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
 let countupper = 0;
 let informer = [441, 442, 443, 444, 445, 446, 447, 448, 449, 450];
-input.disabled = true;
+button.disabled = true;
 
 // 接続確認
 ws.onopen = () => {
   console.log("接続成功");
-  input.disabled = true;
+  button.disabled = true;
     alert('Setup Complete!');
 };
 
@@ -39,8 +39,9 @@ ws.onerror = (e) => {
 
 
 //ここからコード
-const button = document.getElementById('button');
+
 const countup = () => {
     ws.send(informer[countupper]);
     countupper++;
 }
+button.addEventListener('click', countup);
