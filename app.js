@@ -62,7 +62,6 @@ ws.onopen = () => {
 //自動再接続
 ws.onclose = () => {
     console.log("Reactivating Now...");
-    alert("We'll reactivate soon");
     setTimeout(connect, 1000); // 1秒後再接続
   };
 
