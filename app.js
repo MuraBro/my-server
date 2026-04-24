@@ -503,9 +503,10 @@ const countup = () => {
     } else {
         ws.send(deforuto);
         localcount = 1;
-        console.log(arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
+        
     }
-    localshower.textContent = arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
+    console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
+    nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
 }
 
 
