@@ -518,6 +518,8 @@ const countup = () => {
 
 ws.send(deforuto);
 localcount = 1;
+
+
 setInterval(() => {
   investigatesituation();
   console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
@@ -542,4 +544,4 @@ stopb.addEventListener('click', () => {
 
 
 
-//button.addEventListener('click', countup);
+button.addEventListener('click', countup);
