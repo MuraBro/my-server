@@ -71,6 +71,8 @@ const systemlotno = document.getElementById("systemlot");
 const stashower = document.getElementById('staname');
 const boundshower = document.getElementById('boundfor');
 const nexttrainshower = document.getElementById('nexttrain');
+const stopb = document.getElementById('stopbut');
+const depab = document.getElementById('departbut');
 let localcount = 0;
 let stationnum = 0;
 let boundfor = 0;
@@ -275,7 +277,7 @@ const buildtimetablers = (list, num, direct) => {
 
 
 //状況調査
-const investigatesituation = () => {
+const investigatesituation = (mode) => {
   console.log('状況測定　開始！');
     let sendmemom = [...infolist]; //列車ごとリスと
     let lastpapu = [];
@@ -336,6 +338,11 @@ const investigatesituation = () => {
         }
         if(arrivalnum === NaN) {
             arrivalnum = '該当なし';
+        }
+
+
+        if(mode === 'stop') {
+
         }
     }
 
@@ -490,7 +497,7 @@ ws.onerror = (e) => {
 
 //データ送信
 
-let [departuretime, departurenum] = buildtimetablers(diagram, 5, 2);
+let [departuretime, departurenum] = buildtimetablers(diagram, choker, boundfor);
 const countup = () => {
     if(localcount !== 0) {
       investigatesituation();
@@ -509,6 +516,21 @@ const countup = () => {
     nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
 }
 
+ws.send(deforuto);
+localcount = 1;
+setInterval(() => {
+  investigatesituation();
+  console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
+  nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
+}, 500);
+
+
+
+
+
+stopb.addEventListener('click', () => {
+  investigatesituation('stop'); //止めたいときに発動。
+})
 
 
 
@@ -520,11 +542,4 @@ const countup = () => {
 
 
 
-
-
-
-
-
-
-
-button.addEventListener('click', countup);
+//button.addEventListener('click', countup);
