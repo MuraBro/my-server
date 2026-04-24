@@ -80,11 +80,12 @@ let infolist = [];
 const stationlist = {
     station:['Fushimi', 'Osu-Kannon', 'Kamimaezu', 'Tsurumai', 'Arahata', 'Gokiso', 'Kawana', 'Irinaka', 'Yagoto', 'Shiogama-Guchi', 'Ueda', 'Hara', 'Hirabari', 'Akaike', 'Nisshin', 'Komenoki', 'Kurosasa', 'Miyoshigaoka', 'Josui', 'Kamitoyota', 'Umeytsubo', 'Toyotashi'],
 }
+let deforuto = '201A;2;Loc;Fushimi;Akaike;9;10;1,202E;2;Exp;Fushimi;Toyotashi;3;3;0,203;2;Loc;Tsurumai;Hara;0;0;7,118A;1;Loc;Ueda;Irinaka;11;10;1,205;2;Loc;Tsurumai;Hara;11;12;1';
 let info = deforuto; //初期値
 let arrivaltime, arrivialexlc, arrivaldest, arrivalnum;
 
 let diagram = ' 201A;2;普通;伏見発;赤池き;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044/2046/2123/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113,202E;2;Exp;Fushimi;Toyotashi;3;3;0;9987777777777777777777;2036/2038/2040/2042/2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119,203;2;Loc;Tsurumai;Hara;0;0;7;6667777777776666666666     ;2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127,118A;1;Loc;Ueda;Irinaka;11;10;1;6666666777996666666666   ;2144/2046/2048/2050/2052/2054/2056/2058/2101/2051/2153/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127';
-let deforuto = '201A;2;Loc;Fushimi;Akaike;9;10;1,202E;2;Exp;Fushimi;Toyotashi;3;3;0,203;2;Loc;Tsurumai;Hara;0;0;7,118A;1;Loc;Ueda;Irinaka;11;10;1,205;2;Loc;Tsurumai;Hara;11;12;1';
+
 /*
   デモダイヤ
   201A;2;普通;伏見発;赤池ゆき;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113,
@@ -175,7 +176,7 @@ function sortWithPair(A, B) {
 
 
 //時刻表をつくる
-const buildtimetablers = (list, num, direct, ) => {
+const buildtimetablers = (list, num, direct) => {
   console.log('時刻表製作　開始！');
   //列車ごとにわけたよ
   let bytrain = list.split(',');
@@ -299,7 +300,6 @@ const investigatesituation = () => {
     for (let x in departurenum) {
         arrivalnum = NaN;
         if(lastpapu.indexOf(departurenum[x]) !== -1) {
-            console.log(　　'次発列車　発見' + departurenum[x]);
 
 
             let bytrain = diagram.split(',');
