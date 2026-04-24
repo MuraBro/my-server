@@ -24,12 +24,45 @@
 
 
 
-
+//ネットワーク設定
 let ws;
 function connect() {
     ws = new WebSocket("wss://my-server-ja61.onrender.com");
 }
 connect();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//定義領域
 const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
@@ -43,10 +76,15 @@ let stationnum = 0;
 let boundfor = 0;
 let mode = 0;
 button.disabled = true;
-let deforuto = '201A;2;Loc;Fushimi;Akaike;9;10;1,202E;2;Exp;Fushimi;Toyotashi;3;3;0,203;2;Loc;Tsurumai;Hara;0;0;7,118A;1;Loc;Ueda;Irinaka;11;10;1,205;2;Loc;Tsurumai;Hara;11;12;1';
+let infolist = [];
+const stationlist = {
+    station:['Fushimi', 'Osu-Kannon', 'Kamimaezu', 'Tsurumai', 'Arahata', 'Gokiso', 'Kawana', 'Irinaka', 'Yagoto', 'Shiogama-Guchi', 'Ueda', 'Hara', 'Hirabari', 'Akaike', 'Nisshin', 'Komenoki', 'Kurosasa', 'Miyoshigaoka', 'Josui', 'Kamitoyota', 'Umeytsubo', 'Toyotashi'],
+}
 let info = deforuto; //初期値
 let arrivaltime, arrivialexlc, arrivaldest, arrivalnum;
 
+let diagram = ' 201A;2;普通;伏見発;赤池き;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044/2046/2123/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113,202E;2;Exp;Fushimi;Toyotashi;3;3;0;9987777777777777777777;2036/2038/2040/2042/2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119,203;2;Loc;Tsurumai;Hara;0;0;7;6667777777776666666666     ;2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127,118A;1;Loc;Ueda;Irinaka;11;10;1;6666666777996666666666   ;2144/2046/2048/2050/2052/2054/2056/2058/2101/2051/2153/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127';
+let deforuto = '201A;2;Loc;Fushimi;Akaike;9;10;1,202E;2;Exp;Fushimi;Toyotashi;3;3;0,203;2;Loc;Tsurumai;Hara;0;0;7,118A;1;Loc;Ueda;Irinaka;11;10;1,205;2;Loc;Tsurumai;Hara;11;12;1';
 /*
   デモダイヤ
   201A;2;普通;伏見発;赤池ゆき;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113,
@@ -59,23 +97,44 @@ let arrivaltime, arrivialexlc, arrivaldest, arrivalnum;
   方向コード：０回送　１上小田井　２豊田市
   始発・終着したら方向コードも変更してね
 */
-let infolist = [];
 
-//定義領域
-const stationlist = {
-    station:['Fushimi', 'Osu-Kannon', 'Kamimaezu', 'Tsurumai', 'Arahata', 'Gokiso', 'Kawana', 'Irinaka', 'Yagoto', 'Shiogama-Guchi', 'Ueda', 'Hara', 'Hirabari', 'Akaike', 'Nisshin', 'Komenoki', 'Kurosasa', 'Miyoshigaoka', 'Josui', 'Kamitoyota', 'Umeytsubo', 'Toyotashi'],
-}
-const timetable = {
-     num:[  441,  442,  443,  444],
-    time:[  732,  737,  745,  802],
-    exlc:[    0,    0,    1,    0],//急行停車で１？
-    dest:[   14,   22,   22,   13],
-    dept:[    1,    1,    1,    1],
-    stat:[00000,00000,00000,00000]
-}
-const expstop = [1, 4, 14, 22];
 
-let diagram = ' 201A;2;普通;伏見発;赤池き;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044/2046/2123/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113,202E;2;Exp;Fushimi;Toyotashi;3;3;0;9987777777777777777777;2036/2038/2040/2042/2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119,203;2;Loc;Tsurumai;Hara;0;0;7;6667777777776666666666     ;2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127,118A;1;Loc;Ueda;Irinaka;11;10;1;6666666777996666666666   ;2144/2046/2048/2050/2052/2054/2056/2058/2101/2051/2153/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//ChatGPT
+function removeElement(arr, value) {
+  return arr.filter(item => item !== value);
+}
 
 function sortWithPair(A, B) {
   const indices = A.map((_, i) => i)
@@ -86,8 +145,38 @@ function sortWithPair(A, B) {
     B: indices.map(i => B[i])
   };
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //時刻表をつくる
 const buildtimetablers = (list, num, direct, ) => {
+  console.log('時刻表製作　開始！');
   //列車ごとにわけたよ
   let bytrain = list.split(',');
   
@@ -115,49 +204,40 @@ const buildtimetablers = (list, num, direct, ) => {
     aswellbytime.push(bykoumoku[0]);
   }
   //
+  console.log(onlytrainnum);
   let result = sortWithPair(bytime, aswellbytime);
 
     // 結果を取り出す
     let timetabletime = result.A;
     let timetabletrainnum = result.B;
 
+    console.log('　　時刻表：通過時刻通りに並び替え' + timetabletime + timetabletrainnum);
+
     
     for (let sc in timetabletrainnum) {
       //bytrainでの番目を知りたい onlytrainnum.indexOf(timetabletrainnum[sc])
       if(onlytraindirect[onlytrainnum.indexOf(timetabletrainnum[sc])] !== String(direct)) {
-        console.log(onlytraindirect[onlytrainnum.indexOf(timetabletrainnum[sc])], Number(direct));
+        
         timetabletrainnum[sc] = 'fuck';
-        timetabletime[sc] = 'fuck';
-        console.log('方向違い削除' + sc + '　時刻' + timetabletime, '列番' + timetabletrainnum);
+        timetabletime[sc] = 'fuck'; //方向違い削除
       }
       
       if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])] === '6') {
         timetabletrainnum[sc] = 'fuck';
-        timetabletime[sc] = 'fuck';
-        console.log('非営業削除' + sc + '　時刻' + timetabletime, '列番' + timetabletrainnum);
+        timetabletime[sc] = 'fuck';//非営業削除
       }
     }
     
+    console.log('　　時刻表：fuckに置き換え完了' + timetabletime + timetabletrainnum);
 
-    for(let i = 0; i < timetabletrainnum.length;i++) {
-      if(i > timetabletrainnum.length) {
-        break;
-      } else if(timetabletrainnum[i] === 'fuck') {
-        console.log('実行');
-        timetabletrainnum.splice(i, 1);
-        timetabletime.splice(i, 1);
-        console.log(timetabletime, timetabletrainnum)
-      }
-    }
-    console.log('結果' + timetabletime, timetabletrainnum);
+    
+    timetabletime = removeElement(timetabletime, 'fuck');
+    timetabletrainnum = removeElement(timetabletrainnum, 'fuck');
   
+    console.log('時刻表完了' + timetabletime + timetabletrainnum);
     return[timetabletime, timetabletrainnum];
     //timetabletimeが時刻！timetabletrainnumが列車番号！
 }
-let [departuretime, departurenum] = buildtimetablers(diagram, 10, 2) //デモだよ！！！！！！！！！
-
-
-//デモだよ！！！！！！！！！！！！！！！！！！！！！！！！！上は！！！！！！！！！！！
 
 
 
@@ -180,6 +260,128 @@ let [departuretime, departurenum] = buildtimetablers(diagram, 10, 2) //デモだ
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//状況調査
+const investigatesituation = () => {
+  console.log('状況測定　開始！');
+    let sendmemom = [...infolist]; //列車ごとリスと
+    let lastpapu = [];
+    for(let i in sendmemom) {
+      let lastpapurika = sendmemom[i].split(';'); //ラストパプリカは列車のそれぞれの要素を抜き出したよ。
+      //うちらに関係のない車両を取り除く作業
+      if(lastpapurika[1] === '2' && Number(lastpapurika[6]) > choker) {
+        sendmemom[i] = '';
+      }
+      if(lastpapurika[1] === '1' && Number(lastpapurika[6]) < choker) {
+        sendmemom[i] = '';
+      }
+      if(lastpapurika[1] !== String(boundfor)) {
+        
+        sendmemom[i] = '';
+      }
+      lastpapu.push(lastpapurika[0]);
+    }
+    //遺産：sendmemom[choker] = String(Number(sendmemom[choker]) + 1);
+    console.log('　　状況測定：通過済み・回送列車の削除完了' + sendmemom + '  /  ' + lastpapu);
+
+    for (let x in departurenum) {
+        arrivalnum = NaN;
+        if(lastpapu.indexOf(departurenum[x]) !== -1) {
+            console.log(　　'次発列車　発見' + departurenum[x]);
+
+
+            let bytrain = diagram.split(',');
+    
+            let onlytime = [];
+            let onlytrainnum = [];
+            let onlytraindirect = [];
+            let onlytraindistination = [];
+            let onlytrainexlc = [];
+            let bytime = [];
+            
+            //列車ごとに作業するよ
+            for(let chiko in bytrain) {
+          
+              //列車の項目を分けます
+              let bykoumoku = bytrain[chiko].split(';');
+              //ある列車の時刻だけ抽出（文字列）
+              onlytime.push(bykoumoku[9].split('/'));
+              //ある列車の列車番号
+              onlytrainnum.push(bykoumoku[0]);
+              onlytraindirect.push(bykoumoku[1]);
+              onlytraindistination.push(bykoumoku[4]);
+              onlytrainexlc.push(bykoumoku[2]);
+              //その駅の時刻だけ抽出（通過・停車・逆方向含む）
+              bytime.push(Number(onlytime[chiko][Number(choker) - 1]));//ーーーーーーーーーーーーーーーーーーほんとよくない
+            }
+
+
+            arrivalnum = departurenum[x];
+            arrivaltime = departuretime[x];
+            arrivaldest = onlytraindistination[onlytrainnum.indexOf(departurenum[x])];
+            arrivialexlc = onlytrainexlc[onlytrainnum.indexOf(departurenum[x])];
+            break;
+        }
+        if(arrivalnum === NaN) {
+            arrivalnum = '該当なし';
+        }
+    }
+
+    tomatoma = sendmemom.join(','); //
+    localcount++;
+    console.log('状況測定　終了');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////
 const myid = prompt('Enter the "System Code" on the timetable paper.');
 systemlotno.textContent = "systemcode is" + myid;
 
@@ -200,7 +402,48 @@ if(Number(myid) < 300 && myid !== '70') {
     boundfor = myid[2];
 }
 stashower.textContent = stationlist.station[stationnum - 1];
-boundshower.textContent = 'choker is' + choker;
+boundshower.textContent = 'Your Station' + choker;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 接続確認
 ws.onopen = () => {
@@ -209,11 +452,15 @@ ws.onopen = () => {
     alert('Setup Complete!');
 };
 
+
 //自動再接続
 ws.onclose = () => {
     console.log("Reactivating Now...");
     setTimeout(connect, 1000); // 1秒後再接続
   };
+
+
+
 
 // 受信  eventに受信された文字列が入るよ
 ws.onmessage = (event) => {
@@ -223,6 +470,9 @@ ws.onmessage = (event) => {
   output.textContent = info;
   infolist = info.split(','); //列車ごとにわけて
 };
+
+
+
 
 
 
@@ -240,86 +490,15 @@ ws.onerror = (e) => {
 
 //データ送信
 
+buildtimetablers(diagram, choker, boundfor);
 const countup = () => {
     if(localcount !== 0) {
-    
-      let sendmemom = [...infolist]; //列車ごとリスと
-      console.log(sendmemom.length)
-      let lastpapu = [];
-      for(let i in sendmemom) {
-        let lastpapurika = sendmemom[i].split(';'); //ラストパプリカは列車のそれぞれの要素を抜き出したよ。
-          console.log('　'+ i + '番目を抜き出す：'+ lastpapurika);
-        //うちらに関係のない車両を取り除く作業
-        if(lastpapurika[1] === '2' && Number(lastpapurika[6]) > choker) {
-          sendmemom[i] = '';
-          console.log('　　　抹消１' +sendmemom);
-        }
-        if(lastpapurika[1] === '1' && Number(lastpapurika[6]) < choker) {
-          sendmemom[i] = '';
-          console.log('　　　抹消２' +sendmemom);
-        }
-        if(lastpapurika[1] !== String(boundfor)) {
-          
-          sendmemom[i] = '';
-          console.log('　　　抹消３' +sendmemom);
-        }
-        lastpapu.push(lastpapurika[0]);
-      }
-      //遺産：sendmemom[choker] = String(Number(sendmemom[choker]) + 1);
-      
-      for (let x in departurenum) {
-          console.log(lastpapu, lastpapu.indexOf(departurenum[x]));
-          if(lastpapu.indexOf(departurenum[x]) !== -1) {
-              
-  
-  
-              let bytrain = diagram.split(',');
-      
-              let onlytime = [];
-              let onlytrainnum = [];
-              let onlytraindirect = [];
-              let onlytraindistination = [];
-              let onlytrainexlc = [];
-              let bytime = [];
-              
-              //列車ごとに作業するよ
-              for(let chiko in bytrain) {
-            
-                //列車の項目を分けます
-                let bykoumoku = bytrain[chiko].split(';');
-                //ある列車の時刻だけ抽出（文字列）
-                onlytime.push(bykoumoku[9].split('/'));
-                //ある列車の列車番号
-                onlytrainnum.push(bykoumoku[0]);
-                onlytraindirect.push(bykoumoku[1]);
-                onlytraindistination.push(bykoumoku[4]);
-                onlytrainexlc.push(bykoumoku[2]);
-                //その駅の時刻だけ抽出（通過・停車・逆方向含む）
-                bytime.push(Number(onlytime[chiko][Number(choker) - 1]));//ーーーーーーーーーーーーーーーーーーほんとよくない
-              }
-  
-  
-              arrivalnum = departurenum[x];
-              arrivaltime = departuretime[x];
-              arrivaldest = onlytraindistination[onlytrainnum.indexOf(departurenum[x])];
-              arrivialexlc = onlytrainexlc[onlytrainnum.indexOf(departurenum[x])];
-              break;
-          }
-      }
-  
-      tomatoma = sendmemom.join(','); //
-
-
-
-
-
-
+      investigatesituation();
         if (ws.readyState === WebSocket.OPEN) {
-            //ws.send();//tomatomaなんか送るな！！
+            //ws.send();
           } else {
             alert("Connection Stopped");
           }
-      
       localcount++;
     } else {
         ws.send(deforuto);
@@ -328,4 +507,23 @@ const countup = () => {
     }
     localshower.textContent = arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 button.addEventListener('click', countup);
