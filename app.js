@@ -520,11 +520,13 @@ ws.send(deforuto);
 localcount = 1;
 
 
-setInterval(() => {
+/*setInterval(() => {
   investigatesituation();
   console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
   nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
-}, 500);
+}, 500);*/
+
+//接続完了まで待ちたい
 
 
 
