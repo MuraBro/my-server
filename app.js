@@ -490,7 +490,7 @@ ws.onerror = (e) => {
 
 //データ送信
 
-buildtimetablers(diagram, choker, boundfor);
+let [departuretime, departurenum] = buildtimetablers(diagram, 5, 2);
 const countup = () => {
     if(localcount !== 0) {
       investigatesituation();
