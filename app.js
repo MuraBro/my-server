@@ -181,7 +181,6 @@ let [departuretime, departurenum] = buildtimetablers(diagram, 10, 2) //デモだ
 
 
 const myid = prompt('Enter the "System Code" on the timetable paper.');
-const choker = prompt('Enter the "Chocker Code" on the timetable paper.');
 systemlotno.textContent = "systemcode is" + myid;
 
 //役職・駅を表示
@@ -316,7 +315,7 @@ const countup = () => {
 
 
         if (ws.readyState === WebSocket.OPEN) {
-            ws.send();//tomatomaなんか送るな！！
+            //ws.send();//tomatomaなんか送るな！！
           } else {
             alert("Connection Stopped");
           }
