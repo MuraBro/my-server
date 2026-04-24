@@ -516,8 +516,7 @@ const countup = () => {
     nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
 }
 
-ws.send(deforuto);
-localcount = 1;
+
 
 
 /*setInterval(() => {
