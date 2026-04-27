@@ -70,6 +70,7 @@ const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
 const submitter = document.getElementById('submitswitch');
+const renew = document.getElementById('renew');
 
 const stopb = document.getElementById('stopbut');
 const depab = document.getElementById('departbut');
@@ -419,12 +420,23 @@ const investigatesituation = (mode) => {
     shower.trainexlc.textContent = '種別： ' + arrivialexlc;
     shower.traindestination.textContent = '行先' + arrivaldest;
 
-    if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
-      nexttrainstatus = 1; //接近
+    shower.trainapproach.textContent = '接近状況';
+    for(let il in bytrainofdiagram) {
+        if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
+          nexttrainstatus = 1; //接近
+          shower.trainapproach.textContent = '電車が近づいています';
+          break;
+        }
+        if(bytrainofdiagram[il].split(';')[5] === stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
+          nexttrainstatus = 2; //停車中
+          shower.trainapproach.textContent = '電車が到着しました';
+          break;
+        } else {
+
+        }
+
     }
-    if(bytrainofdiagram[il].split(';')[5] === stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
-      nexttrainstatus = 2; //停車中
-    }
+      
 
     localcount++;
     console.log('状況測定　終了');
