@@ -460,7 +460,7 @@ const conposelocationcode = (trainnum, mode, station) => {
 
 /////////////////////////////////////////////////////
 const myid = prompt('Enter the "System Code" on the timetable paper.');
-systemlotno.textContent = "systemcode is" + myid;
+shower.mycode.textContent = "systemcode is" + myid + '   choker is ' + choker;
 
 //役職・駅を表示
 if(Number(myid) < 300 && myid !== '70') {
@@ -479,7 +479,6 @@ if(Number(myid) < 300 && myid !== '70') {
     boundfor = myid[2];
 }
 shower.nowsta.textContent = stationlist.station[stationnum - 1];
-shower.mycode.textContent = 'Your Station' + choker;
 
 
 
