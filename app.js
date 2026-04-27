@@ -306,7 +306,7 @@ const investigatesituation = (mode) => {
 
     for(let ix in infolist[il].split(';')) {
       let sexananan = infolist[il].split(';')[0];
-      if(trainnum !== sexananan) {
+      if(trainnum.trim() !== sexananan) {
         console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
         break;
         
