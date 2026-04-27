@@ -69,13 +69,21 @@ connect();
 const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
-const localshower = document.getElementById("localcount");
-const systemlotno = document.getElementById("systemlot");
-const stashower = document.getElementById('staname');
-const boundshower = document.getElementById('boundfor');
-const nexttrainshower = document.getElementById('nexttrain');
+
 const stopb = document.getElementById('stopbut');
 const depab = document.getElementById('departbut');
+const shower = {
+  depttimes:document.getElementById('depttime'),
+  trainnums:document.getElementById('trainnum'),
+  trainexlc:document.getElementById('exlc'),
+  trainfrom:document.getElementById('from'),
+  traindestination:document.getElementById('to'),
+  traincurrency:document.getElementById('currentwhere'),
+  trainapproach:document.getElementById('Approval'),
+  nowtime:document.getElementById('currenttime'),
+  nowsta:document.getElementById('currentsta'),
+  mycode:document.getElementById('mycode'),
+}
 let localcount = 0;
 let stationnum = 0;
 let boundfor = 0;
@@ -285,6 +293,7 @@ const investigatesituation = (mode) => {
 
   //変数diagramの書き換え
   let bytrainofdiagram = diagram.split(',');
+  let newbytrainofdiagram = [];
   for(let il in bytrainofdiagram) {
     let trainnum = bytrainofdiagram[il].split(';')[0];
     let trainbehindstation = bytrainofdiagram[il].split(';')[5];
@@ -299,14 +308,35 @@ const investigatesituation = (mode) => {
         
         //列番があわない＝errorだ！！
       } else {
-        if(trainbehindstation !== infolist[il].split(';')[5]) {
+        if(trainbehindstation !== infolist[il].split(';')[5] || trainbeyondstation !== infolist[il].split(';')[6] || trainstatus !== infolist[il].split(';')[7] ) {
           //ステータス変更！ここが大事。
+          trainbehindstation = infolist[il].split(';')[5];
+          trainbeyondstation = infolist[il].split(';')[6];
+          trainstatus = infolist[il].split(';')[7];
+          if(mode === 'terminate') {
+            trainlogs = '9999999999999999999999';
+          } else {
+            for(let i in trainlogs.split('')) {
+              if(trainlogs.split('')[i] === '7' && trainbeyondstation !== infolist[il].split(';')[6]) {
+                /* 666777996 停車中 7-7-0
+                   666777996 発車   6-7-1
+                   66677996　到着   6-6-0 */
+                trainlogs.split('')[i] = '9';
+              }
+
+            }
+          }
+
+
         }
-      }
+        newbytrainofdiagram = trainnum + ';' + infolist[il].split(';')[1]+ ';' + infolist[il].split(';')[2] + ';' + infolist[il].split(';')[3] + ';' + infolist[il].split(';')[4] + trainbehindstation + ';' + trainbeyondstation + ';' + trainstatus + ';' + trainlogs + ';' + bytrainofdiagram[il].split(';')[9] + ',';      }
     }
     //201A;2;Loc;Fushimi;Akaike;9;10;1,
     //201A;2;普通;伏見発;赤池ゆき;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044
+    console.log('ダイヤグラム書き換え完了');
   }
+
+
 //自分にいらない要素の削除
     let sendmemom = [...infolist]; //列車ごとリスと
     let lastpapu = [];
@@ -381,7 +411,10 @@ const investigatesituation = (mode) => {
 
     tomatoma = sendmemom.join(','); //
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
-    nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
+    shower.depttimes.textContent = '次の発車: ' + arrivaltime;
+    shower.trainnums.textContent = '列車番号: ' + arrivalnum;
+    shower.trainexlc.textContent = '種別： ' + arrivialexlc;
+    shower.traindestination.textContent = '行先' + arrivaldest;
     localcount++;
     console.log('状況測定　終了');
 }
@@ -445,8 +478,8 @@ if(Number(myid) < 300 && myid !== '70') {
     choker = stationnum;
     boundfor = myid[2];
 }
-stashower.textContent = stationlist.station[stationnum - 1];
-boundshower.textContent = 'Your Station' + choker;
+shower.nowsta.textContent = stationlist.station[stationnum - 1];
+shower.mycode.textContent = 'Your Station' + choker;
 
 
 
