@@ -420,28 +420,30 @@ const investigatesituation = (mode) => {
 
     tomatoma = sendmemom.join(','); //
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
-    /*shower.depttimes.textContent = '次の発車: ' + arrivaltime;
+    console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
+    shower.depttimes.textContent = '次の発車: ' + arrivaltime;
     shower.trainnums.textContent = '列車番号: ' + arrivalnum;
     shower.trainexlc.textContent = '種別： ' + arrivialexlc;
     shower.traindestination.textContent = '行先' + arrivaldest;
 
     shower.trainapproach.textContent = '接近状況';
     for(let il in bytrainofdiagram) {
-        if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation === stationnum) {
+        if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
           nexttrainstatus = 1; //接近
           shower.trainapproach.textContent = '電車が近づいています';
           break;
         }
-        if(bytrainofdiagram[il].split(';')[5] === stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation === stationnum) {
+        if(bytrainofdiagram[il].split(';')[5] === stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
           nexttrainstatus = 2; //停車中
           shower.trainapproach.textContent = '電車が到着しました';
           break;
         } else {
 
         }
-        
+
     }
-    */
+
+    
       
 
     localcount++;
