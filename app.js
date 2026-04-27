@@ -312,7 +312,7 @@ const investigatesituation = (mode) => {
         
         //列番があわない＝errorだ！！
       } else {
-        if(trainbehindstation !== infolist[il].split(',')[5] || trainbeyondstation !== infolist[il].split(';')[6] || trainstatus !== infolist[il].split(';')[7] ) {
+        if(/*trainbehindstation !== infolist[il].split(',')[5] ||*/ trainbeyondstation !== infolist[il].split(';')[6] || trainstatus !== infolist[il].split(';')[7] ) {
           //ステータス変更！ここが大事。
           trainbehindstation = infolist[il].split(';')[5];
           trainbeyondstation = infolist[il].split(';')[6];
