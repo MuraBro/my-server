@@ -308,11 +308,12 @@ const investigatesituation = (mode) => {
       let sexananan = infolist[il].split(';')[0];
       if(trainnum.trim() !== sexananan) {
         console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
+        console.log(trainnum.trim() + '' +  trainnum + ' ' + sexananan + ' ' + (trainnum.trim()===sexananan));
         break;
         
         //列番があわない＝errorだ！！
       } else {
-        if(/*trainbehindstation !== infolist[il].split(',')[5] ||*/ trainbeyondstation !== infolist[il].split(';')[6] || trainstatus !== infolist[il].split(';')[7] ) {
+        if(/*trainbehindstation !== infolist[il].split(',')[ix].split(';')[5] ||*/ trainbeyondstation !== infolist[il].split(';')[6]/* || trainstatus !== infolist[il].split(';')[7] */) {
           //ステータス変更！ここが大事。
           trainbehindstation = infolist[il].split(';')[5];
           trainbeyondstation = infolist[il].split(';')[6];
@@ -347,15 +348,21 @@ const investigatesituation = (mode) => {
     for(let i in sendmemom) {
       let lastpapurika = sendmemom[i].split(';'); //ラストパプリカは列車のそれぞれの要素を抜き出したよ。
       //うちらに関係のない車両を取り除く作業
+      console.log(Number(lastpapurika[6]), choker,Number(lastpapurika[6]) > choker)
       if(lastpapurika[1] === '2' && Number(lastpapurika[6]) > choker) {
         sendmemom[i] = '';
+        console.log('■豊田市方面を削除しました それは' + lastpapurika[0]);
+        lastpapurika = '';
       }
-      if(lastpapurika[1] === '1' && Number(lastpapurika[6]) < choker) {
+      else if(lastpapurika[1] === '1' && Number(lastpapurika[6]) < choker) {
         sendmemom[i] = '';
+        console.log('■伏見方面を削除しました それは' + lastpapurika[0]);
+        lastpapurika = '';
       }
-      if(lastpapurika[1] !== String(boundfor)) {
-        
+      else if(lastpapurika[1] !== String(boundfor)) {
+        console.log('■方向違いを削除しました それは' + lastpapurika[0]);
         sendmemom[i] = '';
+        lastpapurika = '';
       }
       lastpapu.push(lastpapurika[0]);
     }
@@ -366,8 +373,11 @@ const investigatesituation = (mode) => {
 
 
     //次に到着する予定の電車を検索・表示
+    console.log('次の列車は何かな');
+    console.log(departurenum);
     for (let x in departurenum) {
         arrivalnum = NaN;
+        console.log(departurenum[x], lastpapu.indexOf(departurenum[x]))
         if(lastpapu.indexOf(departurenum[x].trim()) !== -1) {
 
 
@@ -402,40 +412,36 @@ const investigatesituation = (mode) => {
             arrivaldest = onlytraindistination[onlytrainnum.indexOf(departurenum[x])];
             arrivialexlc = onlytrainexlc[onlytrainnum.indexOf(departurenum[x])];
             break;
+        } else {
+          arrivalnum = '該当なし';
         }
-        if(arrivalnum === NaN) {
-            arrivalnum = '該当なし';
-        }
-
-
-        if(mode === 'stop') {
-
-        }
+        
     }
 
     tomatoma = sendmemom.join(','); //
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
-    shower.depttimes.textContent = '次の発車: ' + arrivaltime;
+    /*shower.depttimes.textContent = '次の発車: ' + arrivaltime;
     shower.trainnums.textContent = '列車番号: ' + arrivalnum;
     shower.trainexlc.textContent = '種別： ' + arrivialexlc;
     shower.traindestination.textContent = '行先' + arrivaldest;
 
     shower.trainapproach.textContent = '接近状況';
     for(let il in bytrainofdiagram) {
-        if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
+        if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation === stationnum) {
           nexttrainstatus = 1; //接近
           shower.trainapproach.textContent = '電車が近づいています';
           break;
         }
-        if(bytrainofdiagram[il].split(';')[5] === stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
+        if(bytrainofdiagram[il].split(';')[5] === stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation === stationnum) {
           nexttrainstatus = 2; //停車中
           shower.trainapproach.textContent = '電車が到着しました';
           break;
         } else {
 
         }
-
+        
     }
+    */
       
 
     localcount++;
