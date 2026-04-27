@@ -312,7 +312,7 @@ const investigatesituation = (mode) => {
         
         //列番があわない＝errorだ！！
       } else {
-        if(trainbehindstation !== infolist[il].split(';')[5] || trainbeyondstation !== infolist[il].split(';')[6] || trainstatus !== infolist[il].split(';')[7] ) {
+        if(trainbehindstation !== infolist[il].split(',')[ix].split(';')[5] || trainbeyondstation !== infolist[il].split(';')[6] || trainstatus !== infolist[il].split(';')[7] ) {
           //ステータス変更！ここが大事。
           trainbehindstation = infolist[il].split(';')[5];
           trainbeyondstation = infolist[il].split(';')[6];
@@ -368,7 +368,7 @@ const investigatesituation = (mode) => {
     //次に到着する予定の電車を検索・表示
     for (let x in departurenum) {
         arrivalnum = NaN;
-        if(lastpapu.indexOf(departurenum[x]) !== -1) {
+        if(lastpapu.indexOf(departurenum[x].trim()) !== -1) {
 
 
             let bytrain = diagram.split(',');
