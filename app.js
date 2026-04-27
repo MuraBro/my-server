@@ -69,6 +69,7 @@ connect();
 const button = document.getElementById('button');
 const input = document.getElementById("input");
 const output = document.getElementById("output");
+const submitter = document.getElementById('submitswitch');
 
 const stopb = document.getElementById('stopbut');
 const depab = document.getElementById('departbut');
@@ -88,6 +89,7 @@ let localcount = 0;
 let stationnum = 0;
 let boundfor = 0;
 let mode = 0;
+let nexttrainstatus = 0; //0なにもない　１接近　２停車中　（３発車）
 button.disabled = true;
 let infolist = [];
 const stationlist = {
@@ -302,7 +304,8 @@ const investigatesituation = (mode) => {
     let trainlogs = bytrainofdiagram[il].split(';')[8];
 
     for(let ix in infolist[il].split(';')) {
-      if(trainnum !== infolist[il].split(';')[0]) {
+      let sexananan = infolist[il].split(';')[0];
+      if(trainnum !== sexananan) {
         console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
         break;
         
@@ -415,6 +418,14 @@ const investigatesituation = (mode) => {
     shower.trainnums.textContent = '列車番号: ' + arrivalnum;
     shower.trainexlc.textContent = '種別： ' + arrivialexlc;
     shower.traindestination.textContent = '行先' + arrivaldest;
+
+    if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
+      nexttrainstatus = 1; //接近
+    }
+    if(bytrainofdiagram[il].split(';')[5] === stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
+      nexttrainstatus = 2; //停車中
+    }
+
     localcount++;
     console.log('状況測定　終了');
 }
@@ -602,6 +613,11 @@ const countup = () => {
 
 stopb.addEventListener('click', () => {
   investigatesituation('stop'); //止めたいときに発動。
+  if(nexttrainstatus === 1) {
+    alert('止めますね');
+  } else {
+    alert('まだ無効です');
+  }
 })
 
 
@@ -615,3 +631,11 @@ stopb.addEventListener('click', () => {
 
 
 button.addEventListener('click', countup);
+
+submitter.addEventListener('click', () => {
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(input.value);
+  } else {
+    alert("Connection Stopped");
+  }
+})
