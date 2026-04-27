@@ -13,6 +13,9 @@
 
 
 //へい！今日も開発お疲れ様！！！グローばりゅ変数はws.sendされたものだよ～
+//今日の仕事内容：
+//１・データを受け取ったら、ローカル変数diagramの情報を書き換える。←優先順位　303行目からお仕事開始！
+//２・情報送信回路
 
 
 
@@ -279,6 +282,32 @@ const buildtimetablers = (list, num, direct) => {
 //状況調査
 const investigatesituation = (mode) => {
   console.log('状況測定　開始！');
+
+  //変数diagramの書き換え
+  let bytrainofdiagram = diagram.split(',');
+  for(let il in bytrainofdiagram) {
+    let trainnum = bytrainofdiagram[il].split(';')[0];
+    let trainbehindstation = bytrainofdiagram[il].split(';')[5];
+    let trainbeyondstation = bytrainofdiagram[il].split(';')[6];
+    let trainstatus = bytrainofdiagram[il].split(';')[7];
+    let trainlogs = bytrainofdiagram[il].split(';')[8];
+
+    for(let ix in infolist[il].split(';')) {
+      if(trainnum !== infolist[il].split(';')[0]) {
+        console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
+        break;
+        
+        //列番があわない＝errorだ！！
+      } else {
+        if(trainbehindstation !== infolist[il].split(';')[5]) {
+          //ステータス変更！ここが大事。
+        }
+      }
+    }
+    //201A;2;Loc;Fushimi;Akaike;9;10;1,
+    //201A;2;普通;伏見発;赤池ゆき;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044
+  }
+//自分にいらない要素の削除
     let sendmemom = [...infolist]; //列車ごとリスと
     let lastpapu = [];
     for(let i in sendmemom) {
@@ -299,6 +328,10 @@ const investigatesituation = (mode) => {
     //遺産：sendmemom[choker] = String(Number(sendmemom[choker]) + 1);
     console.log('　　状況測定：通過済み・回送列車の削除完了' + sendmemom + '  /  ' + lastpapu);
 
+    
+
+
+    //次に到着する予定の電車を検索・表示
     for (let x in departurenum) {
         arrivalnum = NaN;
         if(lastpapu.indexOf(departurenum[x]) !== -1) {
@@ -347,6 +380,8 @@ const investigatesituation = (mode) => {
     }
 
     tomatoma = sendmemom.join(','); //
+    console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
+    nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
     localcount++;
     console.log('状況測定　終了');
 }
@@ -361,7 +396,9 @@ const investigatesituation = (mode) => {
 
 
 
+const conposelocationcode = (trainnum, mode, station) => {
 
+}
 
 
 
@@ -476,6 +513,7 @@ ws.onmessage = (event) => {
   info = event.data
   output.textContent = info;
   infolist = info.split(','); //列車ごとにわけて
+  investigatesituation();
 };
 
 
@@ -512,8 +550,7 @@ const countup = () => {
         localcount = 1;
         
     }
-    console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
-    nexttrainshower.textContent = 'Next Train: ' + arrivaltime, arrivalnum, arrivialexlc, arrivaldest;
+    
 }
 
 
