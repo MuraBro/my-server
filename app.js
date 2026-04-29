@@ -304,23 +304,26 @@ const investigatesituation = (mode) => {
     let trainstatus = bytrainofdiagram[il].split(';')[7];
     let trainlogs = bytrainofdiagram[il].split(';')[8];
 
-    for(let ix in infolist[il].split(';')) {
-      if(ix === 0) {
-        console.log('JavaScriptのいたずら発生');//ixがなぜか1から始まるため、その対策をしてあります。（２０２６．４．３０）
-      }
-      let sexananan = infolist[ix - 1].split(';')[0]; //元はil
+    console.log('ステータス変更開始します', il, '番目');
+//    for(let ix in infolist[il].split(';')) {
+      let sexananan = infolist[il].split(';')[0];
+      console.log(il,'番目　ダイヤ上での次駅',  trainbeyondstation,'　送信データによる情報',  infolist[il].split(';')[6] /*これはネットからの情報 */,'時刻表とデータtrueなら不一致',  trainbeyondstation !== infolist[il].split(';')[6]);
+      console.log(trainbeyondstation !== infolist[il].split(';')[6]);
       if(trainnum.trim() !== sexananan) {
         console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
-        console.log(il, ' 現在参照', ix, ' そのinfolistは', infolist[ix],   '　ダイヤ情報', bytrainofdiagram[il],'　ダイヤ上の列番',  trainnum.trim() + '　サーバ～から' + sexananan + ' 真偽' + (trainnum.trim()===sexananan));
-        //元　break;
+        console.log(trainnum.trim() + '' +  trainnum + ' ' + sexananan + ' ' + (trainnum.trim()===sexananan));
+        break;
+        
         //列番があわない＝errorだ！！
       } else {
         if(/*trainbehindstation !== infolist[il].split(',')[ix].split(';')[5] ||*/ trainbeyondstation !== infolist[il].split(';')[6]/* || trainstatus !== infolist[il].split(';')[7] */) {
           //ステータス変更！ここが大事。
+          console.log('ステータス変更していくよ！');
           trainbehindstation = infolist[il].split(';')[5];
           trainbeyondstation = infolist[il].split(';')[6];
           trainstatus = infolist[il].split(';')[7];
-          console.log('！！！！！！！正しい更新がはじまりました');
+          console.log(bytrainofdiagram[il].split(';')[8]);
+          console.log(trainlogs);
           if(mode === 'terminate') {
             trainlogs = '9999999999999999999999';
           } else {
@@ -334,12 +337,12 @@ const investigatesituation = (mode) => {
 
             }
           }
-          
-          break;
+
+
         }
         newbytrainofdiagram.push(trainnum + ';' + infolist[il].split(';')[1]+ ';' + infolist[il].split(';')[2] + ';' + infolist[il].split(';')[3] + ';' + infolist[il].split(';')[4] + ';' + trainbehindstation + ';' + trainbeyondstation + ';' + trainstatus + ';' + trainlogs + ';' + bytrainofdiagram[il].split(';')[9]  );      
-        console.log(newbytrainofdiagram[newbytrainofdiagram.length - 1]);
-      }
+        console.log(trainnum + ';' + infolist[il].split(';')[1]+ ';' + infolist[il].split(';')[2] + ';' + infolist[il].split(';')[3] + ';' + infolist[il].split(';')[4] + trainbehindstation + ';' + trainbeyondstation + ';' + trainstatus + ';' + trainlogs + ';' + bytrainofdiagram[il].split(';')[9] );
+      //}
     }
     //201A;2;Loc;Fushimi;Akaike;9;10;1,
     //201A;2;普通;伏見発;赤池ゆき;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044
