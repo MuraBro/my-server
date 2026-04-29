@@ -305,7 +305,10 @@ const investigatesituation = (mode) => {
     let trainlogs = bytrainofdiagram[il].split(';')[8];
 
     for(let ix in infolist[il].split(';')) {
-      let sexananan = infolist[ix].split(';')[0]; //元はil
+      if(ix === 0) {
+        console.log('JavaScriptのいたずら発生');//ixがなぜか1から始まるため、その対策をしてあります。（２０２６．４．３０）
+      }
+      let sexananan = infolist[ix - 1].split(';')[0]; //元はil
       if(trainnum.trim() !== sexananan) {
         console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
         console.log(il, ' 現在参照', ix, ' そのinfolistは', infolist[ix],   '　ダイヤ情報', bytrainofdiagram[il],'　ダイヤ上の列番',  trainnum.trim() + '　サーバ～から' + sexananan + ' 真偽' + (trainnum.trim()===sexananan));
@@ -317,6 +320,7 @@ const investigatesituation = (mode) => {
           trainbehindstation = infolist[il].split(';')[5];
           trainbeyondstation = infolist[il].split(';')[6];
           trainstatus = infolist[il].split(';')[7];
+          console.log('！！！！！！！正しい更新がはじまりました');
           if(mode === 'terminate') {
             trainlogs = '9999999999999999999999';
           } else {
@@ -330,10 +334,11 @@ const investigatesituation = (mode) => {
 
             }
           }
-
+          
           break;
         }
         newbytrainofdiagram.push(trainnum + ';' + infolist[il].split(';')[1]+ ';' + infolist[il].split(';')[2] + ';' + infolist[il].split(';')[3] + ';' + infolist[il].split(';')[4] + ';' + trainbehindstation + ';' + trainbeyondstation + ';' + trainstatus + ';' + trainlogs + ';' + bytrainofdiagram[il].split(';')[9]  );      
+        console.log(newbytrainofdiagram[newbytrainofdiagram.length - 1]);
       }
     }
     //201A;2;Loc;Fushimi;Akaike;9;10;1,
