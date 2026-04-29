@@ -364,6 +364,30 @@ const investigatesituation = (mode) => {
         sendmemom[i] = '';
         lastpapurika = '';
       }
+
+
+
+
+
+
+
+
+
+
+
+      //終点を迎える電車の処理を追加！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+
+
+
+
+
+
+
+
+
+
+
       lastpapu.push(lastpapurika[0]);
     }
     //遺産：sendmemom[choker] = String(Number(sendmemom[choker]) + 1);
