@@ -452,6 +452,7 @@ const investigatesituation = (mode) => {
 
     shower.trainapproach.textContent = '接近状況';
     for(let il in bytrainofdiagram) {
+      console.log('前駅', bytrainofdiagram[il].split(';')[5], '次駅', bytrainofdiagram[il].split(';')[6], 'この駅',stationnum);
         if(bytrainofdiagram[il].split(';')[5] !== stationnum && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === stationnum) {
           nexttrainstatus = 1; //接近
           shower.trainapproach.textContent = '電車が近づいています';
