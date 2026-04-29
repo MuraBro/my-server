@@ -212,7 +212,7 @@ const buildtimetablers = (list, num, direct) => {
     //ある列車の時刻だけ抽出（文字列）
     onlytime.push(bykoumoku[9].split('/'));
     //ある列車の列車番号
-    onlytrainnum.push(bykoumoku[0]);
+    onlytrainnum.push(bykoumoku[0].trim());
     onlytraindirect.push(bykoumoku[1]);
     onlytrainstops.push(bykoumoku[8].split(''));
     //その駅の時刻だけ抽出（通過・停車・逆方向含む）
@@ -233,7 +233,7 @@ const buildtimetablers = (list, num, direct) => {
     
     for (let sc in timetabletrainnum) {
       //bytrainでの番目を知りたい onlytrainnum.indexOf(timetabletrainnum[sc])
-      if(onlytraindirect[onlytrainnum.indexOf(timetabletrainnum[sc])] !== String(direct)) {
+      if(onlytraindirect[onlytrainnum.indexOf(timetabletrainnum[sc].trim())] !== String(direct)) {
         
         timetabletrainnum[sc] = 'fuck';
         timetabletime[sc] = 'fuck'; //方向違い削除
