@@ -334,12 +334,16 @@ const investigatesituation = (mode) => {
 
 
         }
-        newbytrainofdiagram = trainnum + ';' + infolist[il].split(';')[1]+ ';' + infolist[il].split(';')[2] + ';' + infolist[il].split(';')[3] + ';' + infolist[il].split(';')[4] + trainbehindstation + ';' + trainbeyondstation + ';' + trainstatus + ';' + trainlogs + ';' + bytrainofdiagram[il].split(';')[9] + ',';      }
+        newbytrainofdiagram.push(trainnum + ';' + infolist[il].split(';')[1]+ ';' + infolist[il].split(';')[2] + ';' + infolist[il].split(';')[3] + ';' + infolist[il].split(';')[4] + ';' + trainbehindstation + ';' + trainbeyondstation + ';' + trainstatus + ';' + trainlogs + ';' + bytrainofdiagram[il].split(';')[9]  );      
+      }
     }
     //201A;2;Loc;Fushimi;Akaike;9;10;1,
     //201A;2;普通;伏見発;赤池ゆき;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044
     console.log('ダイヤグラム書き換え完了');
   }
+  diagram = newbytrainofdiagram.join(',');
+  bytrainofdiagram = diagram.split(','); //分けなおし
+
 
 
 //自分にいらない要素の削除
