@@ -308,7 +308,7 @@ const investigatesituation = (mode) => {
       let sexananan = infolist[il].split(';')[0];
       if(trainnum.trim() !== sexananan) {
         console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
-        console.log(trainnum.trim() + '' +  trainnum + ' ' + sexananan + ' ' + (trainnum.trim()===sexananan));
+        console.log('現在参照', il,'　その電車のダイヤ情報', bytrainofdiagram[il],'ダイヤの列番',  trainnum.trim() + 'サーバ～から' + sexananan + ' 真偽' + (trainnum.trim()===sexananan));
         break;
         
         //列番があわない＝errorだ！！
