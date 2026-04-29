@@ -444,6 +444,7 @@ const investigatesituation = (mode) => {
 
             arrivalnum = departurenum[x];
             arrivaltime = departuretime[x];
+            console.log(onlytrainnum);
             arrivaldest = onlytraindistination[onlytrainnum.indexOf(departurenum[x])];
             arrivialexlc = onlytrainexlc[onlytrainnum.indexOf(departurenum[x])];
             break;
