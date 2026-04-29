@@ -308,7 +308,7 @@ const investigatesituation = (mode) => {
       let sexananan = infolist[ix].split(';')[0]; //元はil
       if(trainnum.trim() !== sexananan) {
         console.log('状況調査中にエラーが発生しました：送信されたデータがコードと会いません。');
-        console.log('現在参照', il,'　その電車のダイヤ情報', bytrainofdiagram[il],'ダイヤの列番',  trainnum.trim() + 'サーバ～から' + sexananan + ' 真偽' + (trainnum.trim()===sexananan));
+        console.log(il, ' 現在参照', ix, ' そのinfolistは', infolist[ix],   '　ダイヤ情報', bytrainofdiagram[il],'　ダイヤ上の列番',  trainnum.trim() + '　サーバ～から' + sexananan + ' 真偽' + (trainnum.trim()===sexananan));
         //元　break;
         //列番があわない＝errorだ！！
       } else {
@@ -425,7 +425,7 @@ const investigatesituation = (mode) => {
               //ある列車の時刻だけ抽出（文字列）
               onlytime.push(bykoumoku[9].split('/'));
               //ある列車の列車番号
-              onlytrainnum.push(bykoumoku[0]);
+              onlytrainnum.push(bykoumoku[0].trim());
               onlytraindirect.push(bykoumoku[1]);
               onlytraindistination.push(bykoumoku[4]);
               onlytrainexlc.push(bykoumoku[2]);
