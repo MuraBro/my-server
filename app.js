@@ -486,10 +486,10 @@ const investigatesituation = (modeanan) => {
     tomatoma = sendmemom.join(','); //
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
-    shower.depttimes.textContent = '次の発車: ' + arrivaltime;
-    shower.trainnums.textContent = '列車番号: ' + arrivalnum;
-    shower.trainexlc.textContent = '種別： ' + arrivialexlc;
-    shower.traindestination.textContent = '行先' + arrivaldest;
+    shower.depttimes.textContent =  arrivaltime;
+    shower.trainnums.textContent = arrivalnum;
+    shower.trainexlc.textContent =  arrivialexlc;
+    shower.traindestination.textContent =  arrivaldest;
 
     shower.trainapproach.textContent = '接近状況　接近はありません';
     shower.trainapproach.style = 'color:white;'
@@ -562,7 +562,7 @@ const conposelocationcode = (trainnum, modes, station) => {
 
 /////////////////////////////////////////////////////
 const myid = prompt('Enter the "System Code" on the timetable paper.');
-shower.mycode.textContent = "systemcode is" + myid;
+shower.mycode.textContent = myid;
 
 //役職・駅を表示
 if(Number(myid) < 300 && myid !== '70') {
