@@ -582,7 +582,7 @@ if(Number(myid) < 300 && myid !== '70') {
     choker = stationnum;
     boundfor = myid[2];
     shower.myrole.textContent = '車両留置';
-    depab.foreki.style = 'display:none;';
+    depab.style = 'display:none;';
 }
 shower.nowsta.textContent = stationlist.station[stationnum - 1];
 
