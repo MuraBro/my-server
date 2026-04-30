@@ -205,6 +205,7 @@ const buildtimetablers = (list, num, direct) => {
   let onlytrainnum = [];
   let onlytraindirect = [];
   let onlytrainstops = [];
+  let onlytrainfrom = [];
   let bytime = [];
   let aswellbytime = [];
   
@@ -218,6 +219,7 @@ const buildtimetablers = (list, num, direct) => {
     //ある列車の列車番号
     onlytrainnum.push(bykoumoku[0].trim());
     onlytraindirect.push(bykoumoku[1]);
+    onlytrainfrom.push(bykoumoku[3]);
     onlytrainstops.push(bykoumoku[8].split(''));
     //その駅の時刻だけ抽出（通過・停車・逆方向含む）
     bytime.push(Number(onlytime[chiko][Number(num) - 1]));
@@ -244,6 +246,10 @@ const buildtimetablers = (list, num, direct) => {
       }
       
       if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])] === '6') {
+        timetabletrainnum[sc] = 'fuck';
+        timetabletime[sc] = 'fuck';//非営業削除
+      }
+      if(mode === 2 && onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])] !== stationlist.station[stationnum]) {
         timetabletrainnum[sc] = 'fuck';
         timetabletime[sc] = 'fuck';//非営業削除
       }
@@ -295,7 +301,7 @@ const buildtimetablers = (list, num, direct) => {
 
 
 //状況調査
-const investigatesituation = (mode) => {
+const investigatesituation = (modeanan) => {
   console.log('状況測定　開始！');
 
   //変数diagramの書き換え
@@ -329,7 +335,7 @@ const investigatesituation = (mode) => {
           trainstatus = infolist[il].split(';')[7];
           console.log(bytrainofdiagram[il].split(';')[8]);
           console.log(trainlogs);
-          if(mode === 'terminate') {
+          if(modeanan === 'terminate') {
             trainlogs = '9999999999999999999999';
           } else {
             for(let i in trainlogs.split('')) {
@@ -526,7 +532,7 @@ const investigatesituation = (mode) => {
 
 
 
-const conposelocationcode = (trainnum, mode, station) => {
+const conposelocationcode = (trainnum, modes, station) => {
 
 }
 
