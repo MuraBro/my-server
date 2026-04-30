@@ -733,7 +733,7 @@ depab.addEventListener('click', () => {
         console.log('終点処りしまsu');
         investigatesituation('terminate');
       } else {
-        if(boundfor === 2) {
+        if(boundfor === '2') {
           ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
         } else if(boundfor === 1) {
           ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
