@@ -119,7 +119,7 @@ let diagram = ' 201A;2;Loc;Fushimi;Akaike;9;10;1;9999999997777766666666 ;2030/20
   始発・終着したら方向コードも変更してね
 */
 
-
+const exst = [1, 4, 14, 22];
 
 
 
@@ -747,7 +747,12 @@ const maketraingo = () => {
 
 const maketrainstop = () => {
   if (ws.readyState === WebSocket.OPEN) {
-    ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
+    if(arrivialexlc === 'Exp' && exst.indexOf(Number(stationnum)) === -1) {
+      ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
+    } else {
+      ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
+    }
+    
   } else {
     alert("通信が無効です");
   }
@@ -765,7 +770,7 @@ stopb.addEventListener('click', () => {
 
 depab.addEventListener('click', () => {
   investigatesituation('go'); //止めたいときに発動。
-  if(nexttrainstatus === 2) {
+  if(nexttrainstatus === 2 && mode === 1) {
     maketraingo();
   } else {
     alert('まだ無効です');
