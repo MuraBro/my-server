@@ -783,7 +783,7 @@ depab.addEventListener('click', () => {
 this.addEventListener('keyup', (event) => {
   if(nexttrainstatus === 1) {
     maketrainstop();
-  } else if(nexttrainstatus === 2) {
+  } else if(nexttrainstatus === 2 && mode === 1) {
     maketraingo();
   } else {
     console.log('なめとんか');
