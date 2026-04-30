@@ -722,7 +722,33 @@ stopb.addEventListener('click', () => {
   } else {
     alert('まだ無効です');
   }
-})
+});
+
+depab.addEventListener('click', () => {
+  investigatesituation('go'); //止めたいときに発動。
+  if(nexttrainstatus === 2) {
+    if (ws.readyState === WebSocket.OPEN) {
+      if(arrivaldest === stationnum) {
+        ws.send(buildsendingmessageandsend(arrivalnum.trim(), 9999, 9999, 9));
+        console.log('終点処りしまsu');
+        investigatesituation('terminate');
+      } else {
+        if(boundfor === 2) {
+          ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
+        } else if(boundfor === 1) {
+          ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
+        } else {
+          console.log('errorです');
+          alert('名にこいつ');
+        }
+      }
+    } else {
+      alert("通信が無効です");
+    }
+  } else {
+    alert('まだ無効です');
+  }
+});
 
 
 
