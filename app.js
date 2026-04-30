@@ -316,7 +316,7 @@ const investigatesituation = (mode) => {
         
         //列番があわない＝errorだ！！
       } else {
-        if(/*trainbehindstation !== infolist[il].split(',')[ix].split(';')[5] ||*/ trainbeyondstation !== infolist[il].split(';')[6]/* || trainstatus !== infolist[il].split(';')[7] */) {
+        if(trainbehindstation !== infolist[il].split(';')[5] || trainbeyondstation !== infolist[il].split(';')[6]|| trainstatus !== infolist[il].split(';')[7] ) {
           //ステータス変更！ここが大事。
           console.log('ステータス変更していくよ！');
           trainbehindstation = infolist[il].split(';')[5];
@@ -403,6 +403,20 @@ const investigatesituation = (mode) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       lastpapu.push(lastpapurika[0]);
     }
     //遺産：sendmemom[choker] = String(Number(sendmemom[choker]) + 1);
@@ -469,6 +483,7 @@ const investigatesituation = (mode) => {
 
     shower.trainapproach.textContent = '接近状況　接近はありません';
     shower.trainapproach.style = 'color:white;'
+    nexttrainstatus = 0;
     for(let il in bytrainofdiagram) {
       console.log('列車番号', bytrainofdiagram[il].split(';')[0], '前駅', bytrainofdiagram[il].split(';')[5], '次駅', bytrainofdiagram[il].split(';')[6], 'この駅',String(stationnum), '　接近？', bytrainofdiagram[il].split(';')[5] !== String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum));
         if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] !== String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
@@ -576,6 +591,23 @@ shower.nowsta.textContent = stationlist.station[stationnum - 1];
 
 
 
+const buildsendingmessageandsend = (trainnums, beforestation, afterstation, situation)  => {
+  let ijiruinfolist = [...infolist];
+  let wherechange = -1;
+  for(let i in ijiruinfolist) {
+    if(trainnums === ijiruinfolist[i].split(';')[0]) {
+      wherechange = i;
+      break;
+    }
+  }
+  //変更位置特定完了
+let partsofinfolist = ijiruinfolist[wherechange].split(';');
+  partsofinfolist.splice(5, 1, String(beforestation));
+  partsofinfolist.splice(6, 1, String(afterstation));
+  partsofinfolist.splice(7, 1, String(situation));
+  ijiruinfolist[wherechange] = partsofinfolist.join(';');
+  return ijiruinfolist.join(',');
+}
 
 
 
@@ -680,7 +712,11 @@ const countup = () => {
 stopb.addEventListener('click', () => {
   investigatesituation('stop'); //止めたいときに発動。
   if(nexttrainstatus === 1) {
-    alert('止めますね');
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(buildsendingmessageandsend(arrivalnum, stationnum, stationnum, 0));
+    } else {
+      alert("通信が無効です");
+    }
   } else {
     alert('まだ無効です');
   }
