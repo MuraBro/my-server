@@ -450,8 +450,8 @@ const investigatesituation = (mode) => {
             arrivalnum = departurenum[x];
             arrivaltime = departuretime[x];
             console.log('発車時刻',departurenum, '　何番目？', x);
-            arrivaldest = onlytraindistination[onlytrainnum.indexOf(departurenum[x])];
-            arrivialexlc = onlytrainexlc[onlytrainnum.indexOf(departurenum[x])];
+            arrivaldest = onlytraindistination[onlytrainnum.indexOf(departurenum[x].trim())];
+            arrivialexlc = onlytrainexlc[onlytrainnum.indexOf(departurenum[x].trim())];
             break;
         } else {
           arrivalnum = '該当なし';
@@ -469,7 +469,7 @@ const investigatesituation = (mode) => {
 
     shower.trainapproach.textContent = '接近状況';
     for(let il in bytrainofdiagram) {
-      console.log('前駅', bytrainofdiagram[il].split(';')[5], '次駅', bytrainofdiagram[il].split(';')[6], 'この駅',String(stationnum));
+      console.log('列車番号', bytrainofdiagram[il].split(';')[0], '前駅', bytrainofdiagram[il].split(';')[5], '次駅', bytrainofdiagram[il].split(';')[6], 'この駅',String(stationnum), '　接近？', bytrainofdiagram[il].split(';')[5] !== String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum));
         if(bytrainofdiagram[il].split(';')[5] !== String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
           nexttrainstatus = 1; //接近
           shower.trainapproach.textContent = '電車が近づいています';
