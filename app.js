@@ -601,7 +601,7 @@ const buildsendingmessageandsend = (trainnums, beforestation, afterstation, situ
     }
   }
   //変更位置特定完了
-  console.log('変更位置は', i, ' いじるは', ijiruinfolist);
+  console.log('変更位置は', wherechange, ' いじるは', ijiruinfolist);
 let partsofinfolist = ijiruinfolist[wherechange].split(';');
 
   partsofinfolist.splice(5, 1, String(beforestation));
