@@ -601,7 +601,9 @@ const buildsendingmessageandsend = (trainnums, beforestation, afterstation, situ
     }
   }
   //変更位置特定完了
+  console.log('変更位置は', i, ' いじるは', ijiruinfolist);
 let partsofinfolist = ijiruinfolist[wherechange].split(';');
+
   partsofinfolist.splice(5, 1, String(beforestation));
   partsofinfolist.splice(6, 1, String(afterstation));
   partsofinfolist.splice(7, 1, String(situation));
@@ -713,7 +715,7 @@ stopb.addEventListener('click', () => {
   investigatesituation('stop'); //止めたいときに発動。
   if(nexttrainstatus === 1) {
     if (ws.readyState === WebSocket.OPEN) {
-      ws.send(buildsendingmessageandsend(arrivalnum, stationnum, stationnum, 0));
+      ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
     } else {
       alert("通信が無効です");
     }
