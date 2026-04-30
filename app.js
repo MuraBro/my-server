@@ -84,6 +84,11 @@ const shower = {
   nowtime:document.getElementById('currenttime'),
   nowsta:document.getElementById('currentsta'),
   mycode:document.getElementById('mycode'),
+  myrole:document.getElementById('myrole'),
+
+  foreki:document.getElementsByClassName('eki'),
+  forshako:document.getElementsByClassName('shako'),
+  fortwo:document.getElementsByClassName('two'),
 }
 let localcount = 0;
 let stationnum = 0;
@@ -560,17 +565,22 @@ if(Number(myid) < 300 && myid !== '70') {
     stationnum = Number(myid[0] + myid[1]);
     choker = stationnum;
     boundfor = myid[2];
+    shower.myrole.textContent = '駅員';
 } else if(myid === '70') {
     mode = 3;
     stationnum = 70;
     boundfor = '0'
+    shower.myrole.textContent = '総合指令';
 }else if(Number(myid) < 960 && Number(myid) > 700) {
     mode = 2;
     stationnum = Number(myid[0] + myid[1]) - 70;
     choker = stationnum;
     boundfor = myid[2];
+    shower.myrole.textContent = '車両留置';
+    shower.foreki.style = 'display:none;';
 }
 shower.nowsta.textContent = stationlist.station[stationnum - 1];
+
 
 
 
