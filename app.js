@@ -12,10 +12,9 @@
 
 
 
-//へい！今日も開発お疲れ様！！！グローばりゅ変数はws.sendされたものだよ～
+//へい！今日も開発お疲れ様！！！グローばru変数はws.sendされたものだよ～
 //今日の仕事内容：
-//１・データを受け取ったら、ローカル変数diagramの情報を書き換える。←優先順位　303行目からお仕事開始！
-//２・情報送信回路
+//１・情報が空のときにdiagram更新回路を行うとdiagramが消えるバグ発生。
 
 
 
@@ -297,6 +296,7 @@ const investigatesituation = (mode) => {
   //変数diagramの書き換え
   let bytrainofdiagram = diagram.split(',');
   let newbytrainofdiagram = [];
+  if(info.trim() !== '') {
   for(let il in bytrainofdiagram) {
     let trainnum = bytrainofdiagram[il].split(';')[0];
     let trainbehindstation = bytrainofdiagram[il].split(';')[5];
@@ -350,6 +350,10 @@ const investigatesituation = (mode) => {
   }
   diagram = newbytrainofdiagram.join(',');
   bytrainofdiagram = diagram.split(','); //分けなおし
+} else {
+  console.log('サーバーは空の情報を送信しました。');
+}
+  
 
 
 
