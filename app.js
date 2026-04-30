@@ -378,65 +378,57 @@ const investigatesituation = (modeanan) => {
 //自分にいらない要素の削除
     let sendmemom = [...infolist]; //列車ごとリスと
     let lastpapu = [];
-    for(let i in sendmemom) {
-      let lastpapurika = sendmemom[i].split(';'); //ラストパプリカは列車のそれぞれの要素を抜き出したよ。
-      //うちらに関係のない車両を取り除く作業
-      console.log(Number(lastpapurika[6]), choker,Number(lastpapurika[6]) > choker)
-      if(lastpapurika[1] === '2' && Number(lastpapurika[6]) > choker) {
-        sendmemom[i] = '';
-        console.log('■豊田市方面を削除しました それは' + lastpapurika[0]);
-        lastpapurika = '';
+    if(mode === 1) {
+      for(let i in sendmemom) {
+        let lastpapurika = sendmemom[i].split(';'); //ラストパプリカは列車のそれぞれの要素を抜き出したよ。
+        //うちらに関係のない車両を取り除く作業
+        console.log(Number(lastpapurika[6]), choker,Number(lastpapurika[6]) > choker)
+        if(lastpapurika[1] === '2' && Number(lastpapurika[6]) > choker) {
+          sendmemom[i] = '';
+          console.log('■豊田市方面を削除しました それは' + lastpapurika[0]);
+          lastpapurika = '';
+        }
+        else if(lastpapurika[1] === '1' && Number(lastpapurika[6]) < choker) {
+          sendmemom[i] = '';
+          console.log('■伏見方面を削除しました それは' + lastpapurika[0]);
+          lastpapurika = '';
+        }
+        else if(lastpapurika[1] !== String(boundfor)) {
+          console.log('■方向違いを削除しました それは' + lastpapurika[0]);
+          sendmemom[i] = '';
+          lastpapurika = '';
+        }
+
+
+        //終点を迎える電車の処理を追加！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+
+        lastpapu.push(lastpapurika[0]);
       }
-      else if(lastpapurika[1] === '1' && Number(lastpapurika[6]) < choker) {
-        sendmemom[i] = '';
-        console.log('■伏見方面を削除しました それは' + lastpapurika[0]);
-        lastpapurika = '';
+    } else if(mode === 2) {
+      for(let i in sendmemom) {
+        let lastpapurika = sendmemom[i].split(';'); //ラストパプリカは列車のそれぞれの要素を抜き出したよ。
+        //うちらに関係のない車両を取り除く作業
+        console.log(Number(lastpapurika[6]), choker,Number(lastpapurika[6]) > choker)
+        if(lastpapurika[3] === stationlist.station[stationnum - 1]) {
+          sendmemom[i] = '';
+          console.log('■ここから出発しない電車を削除しました それは' + lastpapurika[0]);
+          lastpapurika = '';
+        }
+        else if(lastpapurika[1] !== String(boundfor)) {
+          console.log('■方向違いを削除しました それは' + lastpapurika[0]);
+          sendmemom[i] = '';
+          lastpapurika = '';
+        }
+
+
+        //終点を迎える電車の処理を追加！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+
+        lastpapu.push(lastpapurika[0]);
       }
-      else if(lastpapurika[1] !== String(boundfor)) {
-        console.log('■方向違いを削除しました それは' + lastpapurika[0]);
-        sendmemom[i] = '';
-        lastpapurika = '';
-      }
-
-
-
-
-
-
-
-
-
-
-
-      //終点を迎える電車の処理を追加！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      lastpapu.push(lastpapurika[0]);
     }
+      
     //遺産：sendmemom[choker] = String(Number(sendmemom[choker]) + 1);
     console.log('　　状況測定：通過済み・回送列車の削除完了' + sendmemom + '  /  ' + lastpapu);
 
@@ -590,7 +582,7 @@ if(Number(myid) < 300 && myid !== '70') {
     choker = stationnum;
     boundfor = myid[2];
     shower.myrole.textContent = '車両留置';
-    shower.foreki.style = 'display:none;';
+    depab.foreki.style = 'display:none;';
 }
 shower.nowsta.textContent = stationlist.station[stationnum - 1];
 
@@ -764,7 +756,7 @@ const maketrainstop = () => {
 
 stopb.addEventListener('click', () => {
   investigatesituation('stop'); //止めたいときに発動。
-  if(nexttrainstatus === 1) {
+  if(nexttrainstatus === 1 || mode === 2) {
     maketrainstop();
   } else {
     alert('まだ無効です');
