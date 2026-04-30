@@ -467,17 +467,21 @@ const investigatesituation = (mode) => {
     shower.trainexlc.textContent = '種別： ' + arrivialexlc;
     shower.traindestination.textContent = '行先' + arrivaldest;
 
-    shower.trainapproach.textContent = '接近状況';
+    shower.trainapproach.textContent = '接近状況　接近はありません';
+    shower.trainapproach.style = 'color:white;'
     for(let il in bytrainofdiagram) {
       console.log('列車番号', bytrainofdiagram[il].split(';')[0], '前駅', bytrainofdiagram[il].split(';')[5], '次駅', bytrainofdiagram[il].split(';')[6], 'この駅',String(stationnum), '　接近？', bytrainofdiagram[il].split(';')[5] !== String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum));
-        if(bytrainofdiagram[il].split(';')[5] !== String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
+        if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] !== String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
+          //↑の＆＆処理は無駄なので、いつか修正よろしく
           nexttrainstatus = 1; //接近
           shower.trainapproach.textContent = '電車が近づいています';
+          shower.trainapproach.style = 'color:red;'
           break;
         }
-        if(bytrainofdiagram[il].split(';')[5] === String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
+        if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] === String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
           nexttrainstatus = 2; //停車中
           shower.trainapproach.textContent = '電車が到着しました';
+          shower.trainapproach.style = 'color:green;'
           break;
         } else {
 
