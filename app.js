@@ -240,23 +240,25 @@ const buildtimetablers = (list, num, direct) => {
     for (let sc in timetabletrainnum) {
       //bytrainでの番目を知りたい onlytrainnum.indexOf(timetabletrainnum[sc])
       if(onlytraindirect[onlytrainnum.indexOf(timetabletrainnum[sc].trim())] !== String(direct)) {
-        
+        console.log('方向違い削除', timetabletrainnum[sc]);
         timetabletrainnum[sc] = 'fuck';
         timetabletime[sc] = 'fuck'; //方向違い削除
-        console.log('方向違い削除', timetabletrainnum[sc]);
+        
       }
       
       if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])] === '6') {
+        console.log('非営業削除', timetabletrainnum[sc]);
         timetabletrainnum[sc] = 'fuck';
         timetabletime[sc] = 'fuck';//非営業削除
-        console.log('非営業削除', timetabletrainnum[sc]);
+        
       }
       
-      if(mode === 2 && onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])] !== stationlist.station[stationnum]) {
+      if(mode === 2 && onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])] !== stationlist.station[stationnum - 1]) {
+        console.log('発車しないっす', timetabletrainnum[sc]);
+        console.log('モーでは', mode, '　この駅の駅名は', stationlist.station[stationnum - 1], '　列番', timetabletrainnum[sc] , '　列番の場所', onlytrainnum.indexOf(timetabletrainnum[sc]), ' 出身地は',  onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])], ' つまり', mode === 2 && onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])] !== stationlist.station[stationnum - 1]);
         timetabletrainnum[sc] = 'fuck';
         timetabletime[sc] = 'fuck';//非営業削除
-        console.log('発車しないっす', timetabletrainnum[sc]);
-        console.log('モーでは', mode, '　この駅の駅名は', stationlist.station[stationnum], '　列番', timetabletrainnum[sc] , '　列番の場所', onlytrainnum.indexOf(timetabletrainnum[sc]), ' 出身地は',  onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])], ' つまり', mode === 2 && onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])] !== stationlist.station[stationnum]);
+        
       }
     }
     
