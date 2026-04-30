@@ -577,7 +577,7 @@ if(Number(myid) < 300 && myid !== '70') {
     choker = stationnum;
     boundfor = myid[2];
     shower.myrole.textContent = '車両留置';
-    shower.foreki.style = 'display:none;'
+    shower.foreki.style = 'display:none;';
 }
 shower.nowsta.textContent = stationlist.station[stationnum - 1];
 
@@ -719,16 +719,40 @@ const countup = () => {
 
 
 
+const maketraingo = () => {
+  if (ws.readyState === WebSocket.OPEN) {
+    if(arrivaldest === stationnum) {
+      ws.send(buildsendingmessageandsend(arrivalnum.trim(), 9999, 9999, 9));
+      console.log('終点処りしまsu');
+      investigatesituation('terminate');
+    } else {
+      if(boundfor === '2') {
+        ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
+      } else if(boundfor === 1) {
+        ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
+      } else {
+        console.log('errorです');
+        alert('名にこいつ');
+      }
+    }
+  } else {
+    alert("通信が無効です");
+  }
+}
+
+const maketrainstop = () => {
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
+  } else {
+    alert("通信が無効です");
+  }
+}
 
 
 stopb.addEventListener('click', () => {
   investigatesituation('stop'); //止めたいときに発動。
   if(nexttrainstatus === 1) {
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
-    } else {
-      alert("通信が無効です");
-    }
+    maketrainstop();
   } else {
     alert('まだ無効です');
   }
@@ -737,24 +761,7 @@ stopb.addEventListener('click', () => {
 depab.addEventListener('click', () => {
   investigatesituation('go'); //止めたいときに発動。
   if(nexttrainstatus === 2) {
-    if (ws.readyState === WebSocket.OPEN) {
-      if(arrivaldest === stationnum) {
-        ws.send(buildsendingmessageandsend(arrivalnum.trim(), 9999, 9999, 9));
-        console.log('終点処りしまsu');
-        investigatesituation('terminate');
-      } else {
-        if(boundfor === '2') {
-          ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
-        } else if(boundfor === 1) {
-          ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
-        } else {
-          console.log('errorです');
-          alert('名にこいつ');
-        }
-      }
-    } else {
-      alert("通信が無効です");
-    }
+    maketraingo();
   } else {
     alert('まだ無効です');
   }
@@ -763,7 +770,15 @@ depab.addEventListener('click', () => {
 
 
 
-
+this.addEventListener('keyup', (event) => {
+  if(nexttrainstatus === 1) {
+    maketrainstop();
+  } else if(nexttrainstatus === 2) {
+    maketraingo();
+  } else {
+    console.log('なめとんか');
+  }
+});
 
 
 
