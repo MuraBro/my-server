@@ -2,11 +2,46 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-64UC4BEhTGwk3eGpak4nO2jqtl7liTS+juXkSJ2gPAQPmlClQO7s5UgCeR6US48g" crossorigin="anonymous">
     <style>
               body {
   background-color: #262626;
   margin: 0;
   font-family: sans-serif;
+}
+
+#welcomeOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    /* 背景画像 */
+    background: url("welcome3.png") no-repeat center center;
+    background-size: 100% auto;
+background-position: center top;
+}
+
+/* 入力欄とボタンの見た目 */
+#welcomeOverlay input,
+#welcomeOverlay button {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+/* フェードアウト用 */
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s;
 }
 
 /* 共通（白文字・絶対配置） */
@@ -144,35 +179,47 @@ img {
   margin-right: 10px;
   padding: 8px 12px;
 }
+#spinner {
+    display: none;
+    margin-top: 20px;
+}
     </style>
     <title>TRTCOS - Tsurumai Line Train Communication & Operating Systems</title>
   </head>
 <body>
 
-  <img src="logoone.png" alt="kibi">
-  <!--<input id="input">-->
-  <p class="l" id="output">439</p>
-  <input id="input" type="text" width="600" placeholder="ここに送信するコードを入力">
-  <button id="submitswitch">送信</button>
-  <button id="renew">更新</button>
-  <p class="l" id="currentsta" >上小田井</p>
-  <p class="l" id="mycode">042</p>
-  <p class="l" id="myrole">駅員</p>
-  <p class="l" id="depttime">13:42</p>
-  <p class="l" id="trainnum" >201</p>
-  <p class="l" id="exlc">Loc</p>
-  <p class="l" id="from">Fushimi</p>
-  <p class="l" id="to">Toyotashi</p>
-  <p class="l" id="currentwhere">Irinaka --> Yagoto</p>
-  <p class="l" id="Approval" style="color:red;">近づいています</p>
-  <p class="l" id="currenttime">現在 23:14</p>
-  <div id="eki">
-  <button class="all" id="button" >ReadyGo</button>
-  <button class="two" id="stopbut">電車を停車させる／出庫させる</button>
-  <button class="eki" id="departbut">電車を発車させる</button>
+  <div id="welcomeOverlay">
+    <div id="spinner" class="spinner-border text-light" role="status">
+      <span class="visually-hidden">Loading...</span>
   </div>
-  <div id="shako"></div>
-
+    <input type="text" placeholder="名前を入力">
+    <button id="startBtn">スタート</button>
+</div>
+<div id="mainContent">
+    <img src="logoone.png" alt="kibi">
+<!--<input id="input">-->
+<p class="l" id="output">439</p>
+<input id="input" type="text" width="600" placeholder="ここに送信するコードを入力">
+<button id="submitswitch">送信</button>
+<button id="renew">更新</button>
+<p class="l" id="currentsta" >上小田井</p>
+<p class="l" id="mycode">042</p>
+<p class="l" id="myrole">駅員</p>
+<p class="l" id="depttime">13:42</p>
+<p class="l" id="trainnum" >201</p>
+<p class="l" id="exlc">Loc</p>
+<p class="l" id="from">Fushimi</p>
+<p class="l" id="to">Toyotashi</p>
+<p class="l" id="currentwhere">Irinaka --> Yagoto</p>
+<p class="l" id="Approval" style="color:red;">近づいています</p>
+<p class="l" id="currenttime">現在 23:14</p>
+<div id="eki">
+<button class="all" id="button" >ReadyGo</button>
+<button class="two" id="stopbut">電車を停車させる／出庫させる</button>
+<button class="eki" id="departbut">電車を発車させる</button>
+</div>
+<div id="shako"></div>
+</div>
 <script src="app.js">
 </script>
 
