@@ -124,29 +124,6 @@ const exst = [1, 4, 14, 22];
 
 
 
-const btn = document.getElementById("startBtn");
-const overlay = document.getElementById("welcomeOverlay");
-const spinner = document.getElementById("spinner");
-
-btn.addEventListener("click", () => {
-
-    // 入力欄とボタンを隠す
-    btn.style.display = "none";
-    document.querySelector("#welcomeOverlay input").style.display = "none";
-
-    // スピナー表示
-    spinner.style.display = "block";
-
-    // 3秒後に全部閉じる
-    setTimeout(() => {
-        overlay.classList.add("fade-out");
-
-        setTimeout(() => {
-            overlay.style.display = "none";
-        }, 1000);
-
-    }, 3000);
-});
 
 
 
@@ -583,7 +560,33 @@ const conposelocationcode = (trainnum, modes, station) => {
 
 
 /////////////////////////////////////////////////////
-const myid = prompt('Enter the "System Code" on the timetable paper.');
+
+const btn = document.getElementById("startBtn");
+const overlay = document.getElementById("welcomeOverlay");
+const spinner = document.getElementById("spinner");
+let myid;
+
+btn.addEventListener("click", () => {
+
+    // 入力欄とボタンを隠す
+    btn.style.display = "none";
+    document.querySelector("#welcomeOverlay input").style.display = "none";
+    myid = document.querySelector("#welcomeOverlay input").value;
+
+    // スピナー表示
+    spinner.style.display = "block";
+
+    // 3秒後に全部閉じる
+    setTimeout(() => {
+        overlay.classList.add("fade-out");
+
+        setTimeout(() => {
+            overlay.style.display = "none";
+        }, 1000);
+
+    }, 3000);
+});
+
 shower.mycode.textContent = myid;
 
 //役職・駅を表示
