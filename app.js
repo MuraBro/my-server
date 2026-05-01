@@ -124,7 +124,29 @@ const exst = [1, 4, 14, 22];
 
 
 
+const btn = document.getElementById("startBtn");
+const overlay = document.getElementById("welcomeOverlay");
+const spinner = document.getElementById("spinner");
 
+btn.addEventListener("click", () => {
+
+    // 入力欄とボタンを隠す
+    btn.style.display = "none";
+    document.querySelector("#welcomeOverlay input").style.display = "none";
+
+    // スピナー表示
+    spinner.style.display = "block";
+
+    // 3秒後に全部閉じる
+    setTimeout(() => {
+        overlay.classList.add("fade-out");
+
+        setTimeout(() => {
+            overlay.style.display = "none";
+        }, 1000);
+
+    }, 3000);
+});
 
 
 
