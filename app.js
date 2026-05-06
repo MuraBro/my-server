@@ -413,7 +413,7 @@ drawinmap();
         console.log(Number(lastpapurika[6]), choker,Number(lastpapurika[6]) > choker)
         if(lastpapurika[3] !== stationlist.station[stationnum - 1]) {
           sendmemom[i] = '';
-          console.log('■ここから出発しない電車を削除しました それは' + lastpapurika[0]);
+          console.log('■ここから出発しない電車を削除しました それは' + lastpapurika[0] + '　だって' + lastpapurika[0] + ' と　' + stationlist.station[stationnum - 1]);
           lastpapurika = '';
         }
         else if(Number(lastpapurika[6]) > choker) {
