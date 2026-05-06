@@ -837,6 +837,7 @@ if(Number(myid) < 300 && myid !== '70') {
     stationnum = 70;
     boundfor = '0'
     shower.myrole.textContent = '総合指令';
+    choker = 0;
 }else if(Number(myid) < 960 && Number(myid) > 700) {
     mode = 2;
     stationnum = Number(myid[0] + myid[1]) - 70;
