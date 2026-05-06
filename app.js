@@ -937,7 +937,10 @@ ws.onmessage = (event) => {
   info = event.data
   output.textContent = info;
   infolist = info.split(','); //列車ごとにわけて
-  investigatesituation();
+  if(mode !== 2) {
+    investigatesituation();
+  }
+  
 };
 
 
