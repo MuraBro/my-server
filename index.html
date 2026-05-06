@@ -150,6 +150,10 @@ canvas{
   margin-right: 10px;
   padding: 8px 12px;
 }
+.t{
+  position: relative;
+  top:0px;
+}
     </style>
     <title>TRTCOS - Tsurumai Line Train Communication & Operating Systems</title>
   </head>
@@ -159,6 +163,11 @@ canvas{
   <!--<input id="input">-->
   <div id="shirei">
     <canvas id="canvas"></canvas>
+    <input type="text" placeholder="時刻（半角６桁）" class="t">
+<input type="text" placeholder="時刻倍" class="t">
+<label for="autotime" class="t"><input id="autotime" type="radio" name="automanu" class="t" value="自動"><span class="t" style="color:white">自動</span></label>
+<label for="manualtime" class="t"><input id="manualtime" type="radio" name="automanu" class="t" value="手動"><span class="t" style="color:white">手動</span></label>
+<button id="btbt" onclick="relo()">時刻設定</button>
   </div>
   <div id="main">
   <p class="l" id="output">439</p>

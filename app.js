@@ -95,6 +95,7 @@ let localcount = 0;
 let stationnum = 0;
 let boundfor = 0;
 let mode = 0;
+let currenttime;
 let nexttrainstatus = 0; //0なにもない　１接近　２停車中　（３発車）
 button.disabled = true;
 let infolist = [];
@@ -937,10 +938,16 @@ ws.onclose = () => {
 // 受信  eventに受信された文字列が入るよ
 ws.onmessage = (event) => {
   console.log("Received:", event.data);
-  
   info = event.data
   output.textContent = info;
-  infolist = info.split(','); //列車ごとにわけて
+  let headerinvestigater = info.split('@');
+  if(headerinvestigater[0] === 'train') {
+    infolist = headerinvestigater[1].split(','); //列車ごとにわけて
+  } else if(headerinvestigater[0] === 'now') {
+    currenttime = headerinvestigater[1];
+    shower.nowtime.textContent = '只今の時刻' + currenttime;
+  }
+  
   if(mode !== 3) {
     console.log(mode !== 3);
     investigatesituation();
