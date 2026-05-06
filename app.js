@@ -937,7 +937,8 @@ ws.onmessage = (event) => {
   info = event.data
   output.textContent = info;
   infolist = info.split(','); //列車ごとにわけて
-  if(mode !== 2) {
+  if(mode !== 3) {
+    console.log(mode !== 3);
     investigatesituation();
   }
   
@@ -965,7 +966,10 @@ ws.onerror = (e) => {
 let [departuretime, departurenum] = buildtimetablers(diagram, choker, boundfor);
 const countup = () => {
     if(localcount !== 0) {
-      investigatesituation();
+      if(mode !== 3) {
+        investigatesituation();
+      } 
+      
         if (ws.readyState === WebSocket.OPEN) {
             //ws.send();
           } else {
