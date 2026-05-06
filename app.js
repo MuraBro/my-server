@@ -568,6 +568,7 @@ canvas.height = window.innerHeight - 100; // 必要なら高さも
 
 //ライン引き
 const ctx = canvas.getContext('2d');
+(function drawline (){
 ctx.beginPath();
 ctx.font = "bold 50px serif";
 ctx.fillStyle = '#FFFFFF';
@@ -585,6 +586,7 @@ ctx.strokeStyle = '#00a0de';
 ctx.lineWidth = 5;
 ctx.stroke();
 ctx.closePath();
+}());
 
 function drawCutRect(ctx, cx, cy, width, height, dir, color, label) {
   const hw = width / 2;
@@ -748,6 +750,7 @@ drawStations(ctx);
 
     const drawinmap = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawline();
       for(let s in infolist) {
         if(infolist[s].split(';')[1] === '1') {
             //伏見方面
