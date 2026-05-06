@@ -946,6 +946,7 @@ ws.onmessage = (event) => {
   } else if(headerinvestigater[0] === 'now') {
     currenttime = headerinvestigater[1];
     shower.nowtime.textContent = '只今の時刻' + currenttime;
+    document.getElementById('timesetform').value = headerinvestigater[1];
   }
   
   if(mode !== 3) {
@@ -990,7 +991,7 @@ const countup = () => {
           }
       localcount++;
     } else {
-        ws.send(deforuto);
+        ws.send('train@' + deforuto);
         localcount = 1;
         
     }
@@ -1013,14 +1014,14 @@ const countup = () => {
 const maketraingo = () => {
   if (ws.readyState === WebSocket.OPEN) {
     if(arrivaldest === stationnum) {
-      ws.send(buildsendingmessageandsend(arrivalnum.trim(), 9999, 9999, 9));
+      ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), 9999, 9999, 9));
       console.log('終点処りしまsu');
       investigatesituation('terminate');
     } else {
       if(boundfor === '2') {
-        ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
+        ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
       } else if(boundfor === 1) {
-        ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
+        ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
       } else {
         console.log('errorです');
         alert('名にこいつ');
@@ -1034,9 +1035,9 @@ const maketraingo = () => {
 const maketrainstop = () => {
   if (ws.readyState === WebSocket.OPEN) {
     if(arrivialexlc === '急行' && exst.indexOf(Number(stationnum)) === -1) {
-      ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
+      ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
     } else {
-      ws.send(buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
+      ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
     }
     
   } else {
@@ -1085,8 +1086,18 @@ button.addEventListener('click', countup);
 
 submitter.addEventListener('click', () => {
   if (ws.readyState === WebSocket.OPEN) {
-    ws.send(input.value);
+    ws.send('train@' + input.value);
   } else {
     alert("Connection Stopped");
   }
-})
+});
+
+
+const timesetter = document.getElementById('timeset');
+timesetter.addEventListener('click', () => {
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send('now@' + document.getElementById('timesetform').value);
+  } else {
+    alert("Connection Stopped");
+  }
+});
