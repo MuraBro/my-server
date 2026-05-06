@@ -14,7 +14,8 @@
 
 //へい！今日も開発お疲れ様！！！グローばru変数はws.sendされたものだよ～
 //今日の仕事内容：
-//１・情報が空のときにdiagram更新回路を行うとdiagramが消えるバグ発生。
+//１・terminates処理
+//2・時刻管理
 
 
 
@@ -310,7 +311,7 @@ const buildtimetablers = (list, num, direct) => {
 //状況調査
 const investigatesituation = (modeanan) => {
   console.log('状況測定　開始！');
-
+drawinmap();
   //変数diagramの書き換え
   let bytrainofdiagram = diagram.split(',');
   let newbytrainofdiagram = [];
@@ -553,6 +554,260 @@ const conposelocationcode = (trainnum, modes, station) => {
 
 
 
+//vanvasの処理
+const canvas = document.getElementById("canvas");
+
+// ウィンドウ幅に合わせる
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight - 100; // 必要なら高さも
+
+
+//ライン引き
+const ctx = canvas.getContext('2d');
+ctx.beginPath();
+ctx.font = "bold 50px serif";
+ctx.fillStyle = '#FFFFFF';
+ctx.fillText('総合指令', 0, 50);
+
+ctx.moveTo(30, 150);
+ctx.lineTo(1100, 150);
+ctx.moveTo(30, 190);
+ctx.lineTo(1100, 190);
+ctx.moveTo(30, 400);
+ctx.lineTo(1100, 400);
+ctx.moveTo(30, 440);
+ctx.lineTo(1100, 440);
+ctx.strokeStyle = '#00a0de';
+ctx.lineWidth = 5;
+ctx.stroke();
+ctx.closePath();
+
+function drawCutRect(ctx, cx, cy, width, height, dir, color, label) {
+  const hw = width / 2;
+  const hh = height / 2;
+
+  const topLeft = [cx - hw, cy - hh];
+  const topRight = [cx + hw, cy - hh];
+  const bottomRight = [cx + hw, cy + hh];
+  const bottomLeft = [cx - hw, cy + hh];
+
+  const cut = Math.min(width, height) * 0.3;
+
+  let points;
+
+  if (dir === 1) {
+    // 左上カット
+    points = [
+      [topLeft[0] + cut, topLeft[1]],
+      topRight,
+      bottomRight,
+      bottomLeft,
+      [topLeft[0], topLeft[1] + cut]
+    ];
+  } else if (dir === 2) {
+    // 右上カット
+    points = [
+      topLeft,
+      [topRight[0] - cut, topRight[1]],
+      [topRight[0], topRight[1] + cut],
+      bottomRight,
+      bottomLeft
+    ];
+  } else {
+    console.error("dirは1（左）か2（右）で指定してください");
+    return;
+  }
+
+  // ===== 図形描画 =====
+  ctx.beginPath();
+  ctx.moveTo(points[0][0], points[0][1]);
+  for (let i = 1; i < points.length; i++) {
+    ctx.lineTo(points[i][0], points[i][1]);
+  }
+  ctx.closePath();
+
+  ctx.fillStyle = color;
+  ctx.fill();
+
+  // ===== テキスト描画 =====
+  if (label) {
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    // 初期フォントサイズ（大きめ）
+    let fontSize = height * 0.6;
+    ctx.font = `bold ${fontSize}px sans-serif`;
+
+    // 幅に収まるまで縮小
+    while (ctx.measureText(label).width > width * 0.9) {
+      fontSize -= 1;
+      ctx.font = `bold ${fontSize}px sans-serif`;
+      if (fontSize < 10) break;
+    }
+
+    let textY;
+    if (dir === 1) {
+      // 左カット → 下
+      textY = cy + hh + fontSize * 0.9;
+    } else {
+      // 右カット → 上
+      textY = cy - hh - fontSize * 0.9;
+    }
+
+    // 縁取り（視認性アップ）
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "black";
+    ctx.strokeText(label, cx, textY);
+
+    // 本体
+    ctx.fillStyle = "white";
+    ctx.fillText(label, cx, textY);
+  }
+}
+
+function drawStations(ctx) {
+  const left = 30;
+  const right = 1100;
+  const width = right - left;
+  const count = 11;
+  const step = width / count;
+
+  // 駅名（上段：伏見→赤池）
+  const topStations = [
+    "伏見","大須観音","上前津","鶴舞","荒畑",
+    "御器所","川名", "いりなか","八事","塩釜口","植田"
+  ];
+
+  // 駅名（下段：平針→豊田市）
+  const bottomStations = [
+    "平針", "平針","赤池","日進","米野木","黒笹",
+    "三好ヶ丘","浄水","上豊田","梅坪","豊田市",
+  ];
+
+  // 文字設定
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = "16px sans-serif";
+
+  // ===== 上段 =====
+  const topY = (150 + 190) / 2; // 線の間の中央
+
+  for (let i = 0; i < count; i++) {
+    const x = left + step * i + step / 2;
+    ctx.fillText(topStations[i], x, topY);
+  }
+
+  // ===== 下段 =====
+  const bottomY = (400 + 440) / 2;
+
+  for (let i = 0; i < count; i++) {
+    const x = left + step * i + step / 2;
+    ctx.fillText(bottomStations[i], x, bottomY);
+  }
+}
+
+drawStations(ctx);
+  function getStationX(index) {
+      const left = 30;
+      const right = 1100;
+      const count = 11;
+    
+      const width = right - left;
+      const step = width / count;
+      let indexer = index;
+      if(indexer > 11) {
+          indexer = indexer - 11;
+      }
+    
+      // indexは1始まり（伏見=1）
+      if (index < 1 || indexer > count) {
+        console.error("駅番号は1〜22で指定してください");
+        return null;
+      }
+    
+      const i = indexer - 1; // 配列用に0始まりへ
+      return left + step * i + step / 2;
+    }
+
+    const colorhandan = (statuser, exlc) => {
+      if(Number(statuser) === 2) {
+          return '#e44d93';
+      } else if(exlc === '急行' || exlc === 'Exp') {
+          return '#0079c2';
+      } else if(exlc === '普通' || exlc === 'Loc'){
+          return '#ffffff';
+      } else {
+          return '#b5b5ac';
+      }
+    }
+
+    const drawinmap = () => {
+      for(let s in infolist) {
+        if(infolist[s].split(';')[1] === '1') {
+            //伏見方面
+            if(Number(infolist[s].split(';')[5]) > 11) {
+                //下段
+                if(Number(infolist[s].split(';')[7]) === 1) {
+                    //走行中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])) - 40, 470, 30, 20, 1, colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                } else if(Number(infolist[s].split(';')[7]) === 0) {
+                    //停車中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])), 470, 30, 20, 1,colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                }
+            } else if(Number(infolist[s].split(';')[5]) > 0) {
+                //上段
+                if(Number(infolist[s].split(';')[7]) === 1) {
+                    //走行中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])) - 40, 220, 30, 20, 1, colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                } else if(Number(infolist[s].split(';')[7]) === 0) {
+                    //停車中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])), 220, 30, 20, 1,colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                }
+            }
+        } else if(infolist[s].split(';')[1] === '2') {
+            if(Number(infolist[s].split(';')[5]) > 11) {
+                //下段
+                if(Number(infolist[s].split(';')[7]) === 1) {
+                    //走行中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])) + 40, 370, 30, 20, 2, colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                } else if(Number(infolist[s].split(';')[7]) === 0) {
+                    //停車中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])), 370, 30, 20, 2,colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                }
+            } else if(Number(infolist[s].split(';')[5]) > 0) {
+                //上段
+                if(Number(infolist[s].split(';')[7]) === 1) {
+                    //走行中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])) + 40, 120, 30, 20, 2, colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                } else if(Number(infolist[s].split(';')[7]) === 0) {
+                    //停車中
+                    drawCutRect(ctx, getStationX(Number(infolist[s].split(';')[5])), 120, 30, 20, 2,colorhandan(infolist[s].split(';')[7], infolist[s].split(';')[2]), infolist[s].split(';')[0]);
+                }
+        }
+    }
+}
+    }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -585,6 +840,11 @@ if(Number(myid) < 300 && myid !== '70') {
     depab.style = 'display:none;';
 }
 shower.nowsta.textContent = stationlist.station[stationnum - 1];
+if(mode === 3) {
+  document.getElementById('main').style.display = "none";
+} else {
+  document.getElementById('shirei').style.display = "none";
+}
 
 
 

@@ -25,6 +25,12 @@ img {
   height: 81px;
 }
 
+canvas{
+  position: absolute;
+  top:100px;
+}
+
+
 /* ===== メイン情報（ロゴより下に配置） ===== */
 
 /* 現在駅 */
@@ -151,6 +157,10 @@ img {
 
   <img src="logoone.png" alt="kibi">
   <!--<input id="input">-->
+  <div id="shirei">
+    <canvas id="canvas"></canvas>
+  </div>
+  <div id="main">
   <p class="l" id="output">439</p>
   <input id="input" type="text" width="600" placeholder="ここに送信するコードを入力">
   <button id="submitswitch">送信</button>
@@ -172,6 +182,7 @@ img {
   <button class="eki" id="departbut">電車を発車させる</button>
   </div>
   <div id="shako"></div>
+  </div>
 
 <script src="app.js">
 </script>
