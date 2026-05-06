@@ -751,6 +751,7 @@ drawStations(ctx);
     const drawinmap = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawline();
+      drawStations(ctx);
       for(let s in infolist) {
         if(infolist[s].split(';')[1] === '1') {
             //伏見方面
