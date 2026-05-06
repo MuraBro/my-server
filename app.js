@@ -311,7 +311,6 @@ const buildtimetablers = (list, num, direct) => {
 //状況調査
 const investigatesituation = (modeanan) => {
   console.log('状況測定　開始！');
-drawinmap();
   //変数diagramの書き換え
   let bytrainofdiagram = diagram.split(',');
   let newbytrainofdiagram = [];
@@ -941,6 +940,8 @@ ws.onmessage = (event) => {
   if(mode !== 3) {
     console.log(mode !== 3);
     investigatesituation();
+  } else {
+    drawinmap();
   }
   
 };
