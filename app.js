@@ -416,6 +416,11 @@ drawinmap();
           console.log('■ここから出発しない電車を削除しました それは' + lastpapurika[0]);
           lastpapurika = '';
         }
+        else if(Number(lastpapurika[6]) > choker) {
+          sendmemom[i] = '';
+          console.log('■行すぎぃ！！！電車を削除しました それは' + lastpapurika[0]);
+          lastpapurika = '';
+        }
         else if(lastpapurika[1] !== String(boundfor)) {
           console.log('■方向違いを削除しました それは' + lastpapurika[0]);
           sendmemom[i] = '';
@@ -743,6 +748,7 @@ drawStations(ctx);
     }
 
     const drawinmap = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       for(let s in infolist) {
         if(infolist[s].split(';')[1] === '1') {
             //伏見方面
