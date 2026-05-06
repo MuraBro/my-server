@@ -509,10 +509,15 @@ const investigatesituation = (modeanan) => {
           shower.trainapproach.style = 'color:red;'
           break;
         }
-        if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] === String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
+        if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] === String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum) && Number(arrivaltime + '00') > currenttime) {
           nexttrainstatus = 2; //停車中
           shower.trainapproach.textContent = '電車が到着しました';
           shower.trainapproach.style = 'color:green;'
+          break;
+        } else if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] === String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
+          nexttrainstatus = 3; //停車中
+          shower.trainapproach.textContent = '電車を発車させてください';
+          shower.trainapproach.style = 'color:blue;'
           break;
         } else {
 
@@ -941,6 +946,7 @@ ws.onmessage = (event) => {
   info = event.data
   output.textContent = info;
   let headerinvestigater = info.split('@');
+  console.log(headerinvestigater, headerinvestigater[0]);
   if(headerinvestigater[0] === 'train') {
     infolist = headerinvestigater[1].split(','); //列車ごとにわけて
   } else if(headerinvestigater[0] === 'now') {
@@ -1057,7 +1063,7 @@ stopb.addEventListener('click', () => {
 
 depab.addEventListener('click', () => {
   investigatesituation('go'); //止めたいときに発動。
-  if(nexttrainstatus === 2 && mode === 1) {
+  if(nexttrainstatus === 3 && mode === 1) {
     maketraingo();
   } else {
     alert('まだ無効です');
