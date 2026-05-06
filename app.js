@@ -411,9 +411,9 @@ drawinmap();
         let lastpapurika = sendmemom[i].split(';'); //ラストパプリカは列車のそれぞれの要素を抜き出したよ。
         //うちらに関係のない車両を取り除く作業
         console.log(Number(lastpapurika[6]), choker,Number(lastpapurika[6]) > choker)
-        if(lastpapurika[3].trim() !== stationlist.station[stationnum - 1].trim()) {
+        if(lastpapurika[3] !== stationlist.station[stationnum - 1]) {
           sendmemom[i] = '';
-          console.log('■ここから出発しない電車を削除しました それは' + lastpapurika[0] + '　だって' + lastpapurika[3] + ' と　' + stationlist.station[stationnum - 1] + '　は　' + lastpapurika[3].trim() !== stationlist.station[stationnum - 1].trim());
+          console.log('■ここから出発しない電車を削除しました それは' + lastpapurika[0] + '　だって' + lastpapurika[3] + ' と　' + stationlist.station[stationnum - 1] + '　は　' + lastpapurika[3] !== stationlist.station[stationnum - 1]);
           lastpapurika = '';
         }
         else if(Number(lastpapurika[6]) > choker) {
