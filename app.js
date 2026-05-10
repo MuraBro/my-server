@@ -513,11 +513,14 @@ const investigatesituation = (modeanan) => {
     shower.depttimes.textContent =  arrivaltime;
     shower.trainnums.textContent = arrivalnum;
     shower.trainexlc.textContent =  arrivialexlc;
+    
     shower.traindestination.textContent =  arrivaldest;
     if(arrivialexlc === '急行') {
       shower.trainnums.style.color = '#45a8ff';
+      shower.trainexlc.style.color = '#45a8ff';
     } else {
       shower.trainnums.style.color = '#ffffff';
+      shower.trainexlc.style.color = '#ffffff';
     }
     if(arrivialexlc === '急行' && exst.indexOf(Number(stationnum)) === -1) {
       shower.passstop.textContent = '通過'
@@ -531,7 +534,7 @@ const investigatesituation = (modeanan) => {
       shower.nokori.style.color = 'rgb(223, 40, 40)';
     } else {
       shower.nokori.textContent = 'あと' + (arrivaltime - Math.floor(currenttime / 100)) + '分';
-      shower.nokori.style.color = '#ffffff';
+      shower.nokori.style.color = 'rgb(232, 165, 70)';
     }
     if(arrivalstatus === '0') {
       shower.traincurrency.textContent = '現在：' + stationlist.station[arrivalbeyond - 1] + 'に停車中';
