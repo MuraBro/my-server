@@ -1108,7 +1108,8 @@ const timesetter = document.getElementById('timeset');
 timesetter.addEventListener('click', () => {
   if(autotimechecker.checked === true) {
     timearray = [Number(timesetter.value[0] + timesetter.value[1]), Number(timesetter.value[2] + timesetter.value[3]), Number(timesetter.value[4] + timesetter.value[5])];
-    
+    console.log('タイム洗い発砲！！！' + timearray);
+    console.log('ーーー内訳 フォームの値は' + timesetter.value + '　一文字ずつ取り出して' + timesetter.value[1] + 'とか。それを数字にして' + Number(timesetter.value[1]));
     jikokubai = Number(document.getElementById('jikokubai').value);
     timegoesauto = 1;
   } else if(autotimechecker.checked === false) {
@@ -1125,12 +1126,14 @@ timesetter.addEventListener('click', () => {
 
 setInterval(() => {
   if(mode === 3 && timegoesauto === 1) {
+    console.log('時刻変更します');
     timearray[2] += jikokubai;
+    
     if(timearray[2] > 59) {
       timearray[1]++;
       timearray[2] -= 60;
     }
-
+    console.log('変更後：' + timearray);
     if (ws.readyState === WebSocket.OPEN) {
       ws.send('now@' + Number(timearray.join('')));
     } else {
