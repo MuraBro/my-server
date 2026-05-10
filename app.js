@@ -948,8 +948,10 @@ ws.onclose = () => {
 ws.onmessage = (event) => {
   console.log("Received:", event.data);
   info = event.data
-  output.textContent = info;
   let headerinvestigater = info.split('@');
+  if(headerinvestigater[0] === 'train') {
+    output.textContent = info;
+  }
   console.log(headerinvestigater, headerinvestigater[0]);
   if(headerinvestigater[0] === 'train') {
     infolist = headerinvestigater[1].split(','); //列車ごとにわけて
@@ -1023,7 +1025,7 @@ const countup = () => {
 
 const maketraingo = () => {
   if (ws.readyState === WebSocket.OPEN) {
-    if(arrivaldest === stationnum) {
+    if(arrivaldest === stationlist.station[stationnum - 1]) {
       ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), 9999, 9999, 9));
       console.log('終点処りしまsu');
       investigatesituation('terminate');
