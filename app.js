@@ -1105,18 +1105,19 @@ submitter.addEventListener('click', () => {
 
 
 const timesetter = document.getElementById('timeset');
+const timesetform = document.getElementById('timesetform');
 timesetter.addEventListener('click', () => {
   if(autotimechecker.checked === true) {
-    timearray = [Number(timesetter.value[0] + timesetter.value[1]), Number(timesetter.value[2] + timesetter.value[3]), Number(timesetter.value[4] + timesetter.value[5])];
+    timearray = [Number(timesetform.value[0] + timesetform.value[1]), Number(timesetform.value[2] + timesetform.value[3]), Number(timesetform.value[4] + timesetform.value[5])];
     console.log('タイム洗い発砲！！！' + timearray);
-    console.log('ーーー内訳 フォームの値は' + timesetter.value + '　一文字ずつ取り出して' + timesetter.value[1] + 'とか。それを数字にして' + Number(timesetter.value[1]));
+    console.log('ーーー内訳 フォームの値は' + timesetform.value + '　一文字ずつ取り出して' + timesetform.value[1] + 'とか。それを数字にして' + Number(timesetform.value[1]));
     jikokubai = Number(document.getElementById('jikokubai').value);
     timegoesauto = 1;
   } else if(autotimechecker.checked === false) {
     timegoesauto = 0;
 
     if (ws.readyState === WebSocket.OPEN) {
-      ws.send('now@' + document.getElementById('timesetform').value);
+      ws.send('now@' + timesetform.value);
     } else {
       alert("Connection Stopped");
     }
