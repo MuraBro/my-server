@@ -107,7 +107,7 @@ const stationlist = {
 }
 let deforuto = '201A;2;普通;伏見;赤池;9;10;1,202E;2;急行;伏見;豊田市;3;3;0,203;2;普通;鶴舞;原;0;0;7,118A;1;普通;植田;いりなか;11;10;1,205;2;普通;鶴舞;原;15;16;1';
 let info = deforuto; //初期値
-let arrivaltime, arrivialexlc, arrivaldest, arrivalnum, arrivalbehind, arrivalbeyond, arrivalstatus;
+let arrivaltime, arrivialexlc, arrivaldest, arrivalnum, arrivalbehind, arrivalbeyond, arrivalstatus, arrivalfrom;
 let timegoesauto = 0;
 let jikokubai = 0;
 let timearray = [0, 0, 0];
@@ -467,6 +467,7 @@ const investigatesituation = (modeanan) => {
             let onlybehindstation = [];
             let onlybeyondstation = [];
             let onlytrainstatus = [];
+            let onlytrainfrom = [];
             
             //列車ごとに作業するよ
             for(let chiko in bytrain) {
@@ -481,6 +482,7 @@ const investigatesituation = (modeanan) => {
               onlytraindirect.push(bykoumoku[1]);
               onlytraindistination.push(bykoumoku[4]);
               onlytrainexlc.push(bykoumoku[2]);
+              onlytrainfrom.push(bykoumoku[3]);
               onlybehindstation.push(bykoumoku[5]);
               onlybeyondstation.push(bykoumoku[6]);
               onlytrainstatus.push(bykoumoku[7]);
@@ -494,9 +496,10 @@ const investigatesituation = (modeanan) => {
             console.log('発車時刻',departurenum, '　何番目？', x);
             arrivaldest = onlytraindistination[onlytrainnum.indexOf(departurenum[x].trim())];
             arrivialexlc = onlytrainexlc[onlytrainnum.indexOf(departurenum[x].trim())];
-            arrivalbehind = onlytrainbehind[onlytrainnum.indexOf(departurenum[x].trim())];
-            arrivalbeyond = onlytrainbeyond[onlytrainnum.indexOf(departurenum[x].trim())];
+            arrivalbehind = onlybehindstation[onlytrainnum.indexOf(departurenum[x].trim())];
+            arrivalbeyond = onlybeyondstation[onlytrainnum.indexOf(departurenum[x].trim())];
             arrivalstatus = onlytrainstatus[onlytrainnum.indexOf(departurenum[x].trim())];
+            arrivalfrom = onlytrainfrom[onlytrainnum.indexOf(departurenum[x].trim())];
             break;
         } else {
           arrivalnum = '該当なし';
