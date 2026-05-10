@@ -1086,7 +1086,7 @@ const maketraingo = () => {
     } else {
       if(boundfor === '2') {
         ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
-      } else if(boundfor === 1) {
+      } else if(boundfor === '1') {
         ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
       } else {
         console.log('errorです');
