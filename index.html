@@ -7,7 +7,7 @@ body {
   margin: 0;
   background-color: #262626;
   font-family: sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* ================= 共通 ================= */
@@ -22,6 +22,7 @@ body {
 button,
 input {
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 /* ================= ロゴ ================= */
@@ -43,6 +44,7 @@ img {
 }
 
 /* canvas */
+
 #canvas {
   position: absolute;
   top: 110px;
@@ -50,44 +52,48 @@ img {
 }
 
 /* 時刻入力 */
+
 #timesetform {
   position: absolute;
   top: 20px;
   left: 420px;
-  width: 160px;
-  padding: 5px;
+  width: 170px;
+  padding: 6px;
 }
 
 /* 倍率 */
+
 #jikokubai {
   position: absolute;
   top: 20px;
-  left: 600px;
-  width: 100px;
-  padding: 5px;
+  left: 610px;
+  width: 90px;
+  padding: 6px;
 }
 
-/* ラジオボタン */
+/* ラジオ */
+
 label[for="autotime"] {
   position: absolute;
-  top: 22px;
+  top: 23px;
   left: 730px;
   color: white;
 }
 
 label[for="manualtime"] {
   position: absolute;
-  top: 22px;
+  top: 23px;
   left: 820px;
   color: white;
 }
 
-/* 時刻設定ボタン */
+/* 時刻設定 */
+
 #timeset {
   position: absolute;
   top: 18px;
   left: 930px;
-  padding: 6px 12px;
+  padding: 7px 14px;
 }
 
 /* ================= メイン画面 ================= */
@@ -95,140 +101,165 @@ label[for="manualtime"] {
 #main {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* 現在駅 */
+
 #currentsta {
-  font-size: 32px;
-  top: 85px;
+  font-size: 34px;
+  top: 88px;
   left: 20px;
+  font-weight: bold;
 }
 
 /* 現在時刻 */
+
 #currenttime {
   font-size: 20px;
-  top: 90px;
+  top: 92px;
   right: 20px;
 }
 
 /* 出発時刻 */
+
 #depttime {
   font-size: 120px;
   font-weight: bold;
-  top: 130px;
+  top: 135px;
   left: 20px;
+  line-height: 1;
 }
 
 /* 列車番号 */
+
 #trainnum {
   font-size: 120px;
   font-weight: bold;
-  top: 130px;
+  top: 135px;
   left: 430px;
+  line-height: 1;
 }
 
 /* 種別 */
+
 #exlc {
   font-size: 28px;
-  top: 270px;
+  top: 285px;
   left: 30px;
+  font-weight: bold;
+}
+
+/* 始発 */
+
+#from {
+  font-size: 24px;
+  top: 335px;
+  left: 20px;
 }
 
 /* 行先 */
-#from {
-  font-size: 24px;
-  top: 320px;
-  left: 20px;
-}
 
 #to {
   font-size: 24px;
-  top: 360px;
+  top: 375px;
   left: 20px;
 }
 
-/* 現在位置 */
+/* 在線位置 */
+
 #currentwhere {
   font-size: 22px;
-  top: 410px;
+  top: 425px;
   left: 20px;
 }
 
-/* 接近表示 */
+/* 接近 */
+
 #Approval {
   font-size: 28px;
   font-weight: bold;
-  top: 460px;
+  top: 475px;
   left: 20px;
 }
 
 /* 通過・停車 */
+
 #passstop {
   font-size: 28px;
   font-weight: bold;
-  top: 510px;
+  top: 525px;
   left: 20px;
 }
 
 /* 残り時間 */
+
 #nokori {
   font-size: 24px;
-  top: 550px;
+  top: 570px;
   left: 20px;
 }
 
-/* コード */
+/* システムコード */
+
 #mycode {
   font-size: 18px;
-  top: 90px;
+  top: 95px;
   left: 250px;
 }
 
 /* 役職 */
+
 #myrole {
   font-size: 18px;
-  top: 90px;
+  top: 95px;
   left: 320px;
 }
 
-/* 出力 */
+/* 出力ログ */
+
 #output {
-  font-size: 16px;
-  top: 700px;
+  font-size: 15px;
+  top: 760px;
   left: 20px;
-  max-width: 90vw;
+  width: 90vw;
   word-break: break-all;
+  opacity: 0.8;
 }
 
 /* ================= 入力欄 ================= */
 
 #input {
   position: absolute;
-  top: 740px;
+  top: 650px;
   left: 20px;
   width: 420px;
-  padding: 6px;
+  padding: 8px;
 }
 
-/* ボタン */
+/* 送信 */
+
 #submitswitch {
   position: absolute;
-  top: 740px;
+  top: 650px;
   left: 460px;
+  padding: 8px 14px;
 }
+
+/* 更新 */
 
 #renew {
   position: absolute;
-  top: 740px;
-  left: 540px;
+  top: 650px;
+  left: 550px;
+  padding: 8px 14px;
 }
 
 /* ================= 操作ボタン ================= */
 
 #eki {
   position: absolute;
-  top: 800px;
+  top: 710px;
   left: 20px;
 }
 
@@ -236,6 +267,29 @@ label[for="manualtime"] {
   margin-right: 12px;
   padding: 10px 16px;
   font-size: 18px;
+}
+
+/* ================= ボタン共通 ================= */
+
+button {
+  background-color: #404040;
+  color: white;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #505050;
+}
+
+/* ================= 入力欄共通 ================= */
+
+input {
+  background-color: #1f1f1f;
+  color: white;
+  border: 1px solid #808080;
+  border-radius: 4px;
 }
     </style>
     <title>TRTCOS - Tsurumai Line Train Communication & Operating Systems</title>
