@@ -992,7 +992,14 @@ ws.onclose = () => {
 // 受信  eventに受信された文字列が入るよ
 ws.onmessage = (event) => {
   console.log("Received:", event.data);
-  info = event.data
+  if(event.data.split('@')[0] === 'qia' && mode === 3)  {
+    if(ws.readyState === WebSocket.OPEN) {
+      ws.send('train@' + info);
+    } else {
+      alert('接続切断');
+    }
+  } else {
+    info = event.data
   let headerinvestigater = info.split('@');
   if(headerinvestigater[0] === 'train') {
     output.textContent = info;
@@ -1005,13 +1012,7 @@ ws.onmessage = (event) => {
     shower.nowtime.textContent = '只今の時刻' + currenttime;
     document.getElementById('timesetform').value = headerinvestigater[1];
   }
-  if(headerinvestigater[0] === 'qia' && mode === 3)  {
-    if(ws.readyState === WebSocket.OPEN) {
-      ws.send('train@' + info);
-    } else {
-      alert('接続切断');
-    }
-  }
+  
   
   if(mode !== 3) {
     console.log(mode !== 3);
@@ -1019,6 +1020,8 @@ ws.onmessage = (event) => {
   } else {
     drawinmap();
   }
+  }
+  
   
 };
 
