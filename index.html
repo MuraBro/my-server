@@ -154,6 +154,11 @@ canvas{
   position: relative;
   top:0px;
 }
+.t{
+  position:relative;
+  left:0px;
+  top:200px;
+}
     </style>
     <title>TRTCOS - Tsurumai Line Train Communication & Operating Systems</title>
   </head>
@@ -187,8 +192,10 @@ canvas{
   <p class="l" id="from">Fushimi</p>
   <p class="l" id="to">Toyotashi</p>
   <p class="l" id="currentwhere">Irinaka --> Yagoto</p>
-  <p class="l" id="Approval" style="color:red;">近づいています</p>
+  <p class="l" id="Approval" style="color:rgb(223, 40, 40);">近づいています</p>
   <p class="l" id="currenttime">現在 23:14</p>
+  <p class="r" id="passstop" style="color:#f9ff45">停車</p>
+  <p class="r" id="nokori">あと３分</p>
   <div id="eki">
   <button class="all" id="button" >ReadyGo</button>
   <button class="two" id="stopbut">電車を停車させる／出庫させる</button>

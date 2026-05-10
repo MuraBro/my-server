@@ -87,6 +87,8 @@ const shower = {
   nowsta:document.getElementById('currentsta'),
   mycode:document.getElementById('mycode'),
   myrole:document.getElementById('myrole'),
+  nokori:document.getElementById('nokori'),
+  passstop:document.getElementById('passstop'),
 
   foreki:document.getElementsByClassName('eki'),
   forshako:document.getElementsByClassName('shako'),
@@ -500,6 +502,26 @@ const investigatesituation = (modeanan) => {
     shower.trainnums.textContent = arrivalnum;
     shower.trainexlc.textContent =  arrivialexlc;
     shower.traindestination.textContent =  arrivaldest;
+    if(arrivialexlc === '急行') {
+      shower.trainnums.style.color = '#45a8ff';
+    } else {
+      shower.trainnums.style.color = '#ffffff';
+    }
+    if(arrivialexlc === '急行' && exst.indexOf(Number(stationnum)) === -1) {
+      shower.passstop.textContent = '通過'
+      shower.passstop.style.color = 'rgb(223, 40, 40)';
+    } else {
+      shower.passstop.textContent = '停車'
+      shower.passstop.style.color = '#f9ff45';
+    }
+    if((arrivaltime - Math.floor(currenttime / 100)) < 0) {
+      shower.nokori.textContent = '遅延 あと' + (arrivaltime - Math.floor(currenttime / 100)) + '分';
+      shower.nokori.style.color = 'rgb(223, 40, 40)';
+    } else {
+      shower.nokori.textContent = 'あと' + (arrivaltime - Math.floor(currenttime / 100)) + '分';
+      shower.nokori.style.color = '#ffffff';
+    }
+    
 
     shower.trainapproach.textContent = '接近状況　接近はありません';
     shower.trainapproach.style = 'color:white;'
