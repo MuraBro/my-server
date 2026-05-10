@@ -15,7 +15,7 @@
 //へい！今日も開発お疲れ様！！！グローばru変数はws.sendされたものだよ～
 //今日の仕事内容：
 //１・terminates処理
-//2・時刻管理
+//2・時刻管理（intervalから）
 
 
 
@@ -74,6 +74,7 @@ const renew = document.getElementById('renew');
 
 const stopb = document.getElementById('stopbut');
 const depab = document.getElementById('departbut');
+const autotimechecker = document.getElementById('autotime');
 const shower = {
   depttimes:document.getElementById('depttime'),
   trainnums:document.getElementById('trainnum'),
@@ -105,6 +106,9 @@ const stationlist = {
 let deforuto = '201A;2;普通;伏見;赤池;9;10;1,202E;2;急行;伏見;豊田市;3;3;0,203;2;普通;鶴舞;原;0;0;7,118A;1;普通;植田;いりなか;11;10;1,205;2;普通;鶴舞;原;15;16;1';
 let info = deforuto; //初期値
 let arrivaltime, arrivialexlc, arrivaldest, arrivalnum;
+let timegoesauto = 0;
+let jikokubai = 0;
+let timearray = [0, 0, 0];
 
 let diagram = ' 201A;2;普通;伏見;赤池;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113,202E;2;Exp;伏見;豊田市;3;3;0;9987777777777777777777;2036/2038/2040/2042/2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119,203;2;普通;鶴舞;原;0;0;7;6667777777776666666666     ;2044/2046/2048/2050/2052/2054/2056/2058/2101/2103/2105/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127,118A;1;普通;植田;いりなか;11;10;1;6666666777996666666666   ;2144/2046/2048/2050/2052/2054/2056/2058/2101/2051/2153/2107/2109/2111/2113/2115/2117/2119/2121/2123/2125/2127,205;2;普通;鶴舞;原;15;16;1;6666666777777796666666  ;2000/2002/2004/2006/2008/2010/2012/2014/2016/2018/2020/2022/2024/2026/2028/2030/2032/2034/2036/2038/2040/2042';
 
@@ -1076,12 +1080,13 @@ depab.addEventListener('click', () => {
 this.addEventListener('keyup', (event) => {
   if(nexttrainstatus === 1) {
     maketrainstop();
-  } else if(nexttrainstatus === 2 && mode === 1) {
+  } else if(nexttrainstatus === 3 && mode === 1) {
     maketraingo();
   } else {
     console.log('なめとんか');
   }
 });
+
 
 
 
@@ -1101,9 +1106,35 @@ submitter.addEventListener('click', () => {
 
 const timesetter = document.getElementById('timeset');
 timesetter.addEventListener('click', () => {
-  if (ws.readyState === WebSocket.OPEN) {
-    ws.send('now@' + document.getElementById('timesetform').value);
-  } else {
-    alert("Connection Stopped");
+  if(autotimechecker.checked === true) {
+    timearray = [Number(timesetter.value[0] + timesetter.value[1]), Number(timesetter.value[2] + timesetter.value[3]), Number(timesetter.value[4] + timesetter.value[5])];
+    
+    jikokubai = Number(document.getElementById('jikokubai').value);
+    timegoesauto = 1;
+  } else if(autotimechecker.checked === false) {
+    timegoesauto = 0;
+
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send('now@' + document.getElementById('timesetform').value);
+    } else {
+      alert("Connection Stopped");
+    }
   }
+  
 });
+
+setInterval(() => {
+  if(mode === 3 && timegoesauto === 1) {
+    timearray[2] += jikokubai;
+    if(timearray[2] > 59) {
+      timearray[1]++;
+      timearray[2] -= 60;
+    }
+
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send('now@' + Number(timearray.join('')));
+    } else {
+      alert("Connection Stopped");
+    }
+  }
+}, 1000);
