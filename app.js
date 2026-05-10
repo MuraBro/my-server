@@ -1002,6 +1002,13 @@ ws.onmessage = (event) => {
     shower.nowtime.textContent = '只今の時刻' + currenttime;
     document.getElementById('timesetform').value = headerinvestigater[1];
   }
+  if(headerinvestigater[0] === 'qia' && mode === 3)  {
+    if(ws.readyState === WebSocket.OPEN) {
+      ws.send('train@' + info);
+    } else {
+      alert('接続切断');
+    }
+  }
   
   if(mode !== 3) {
     console.log(mode !== 3);
@@ -1033,6 +1040,7 @@ ws.onerror = (e) => {
 
 let [departuretime, departurenum] = buildtimetablers(diagram, choker, boundfor);
 const countup = () => {
+  /*
     if(localcount !== 0) {
       if(mode !== 3) {
         investigatesituation();
@@ -1048,8 +1056,12 @@ const countup = () => {
         ws.send('train@' + deforuto);
         localcount = 1;
         
+    }*/
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send('qia@');
+    } else {
+      alert("Connection Stopped");
     }
-    
 }
 
 
