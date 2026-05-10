@@ -1108,7 +1108,7 @@ const timesetter = document.getElementById('timeset');
 const timesetform = document.getElementById('timesetform');
 timesetter.addEventListener('click', () => {
   if(autotimechecker.checked === true) {
-    timearray = [Number(timesetform.value[0] + timesetform.value[1]), Number(timesetform.value[2] + timesetform.value[3]), Number(timesetform.value[4] + timesetform.value[5])];
+    timearray = [timesetform.value[0] + timesetform.value[1], timesetform.value[2] + timesetform.value[3], timesetform.value[4] + timesetform.value[5]];
     console.log('タイム洗い発砲！！！' + timearray);
     console.log('ーーー内訳 フォームの値は' + timesetform.value + '　一文字ずつ取り出して' + timesetform.value[1] + 'とか。それを数字にして' + Number(timesetform.value[1]));
     jikokubai = Number(document.getElementById('jikokubai').value);
@@ -1128,15 +1128,21 @@ timesetter.addEventListener('click', () => {
 setInterval(() => {
   if(mode === 3 && timegoesauto === 1) {
     console.log('時刻変更します');
-    timearray[2] += jikokubai;
+    timearray[2] = String(Number(timearray[2]) + jikokubai).padStart(2, '0');
     
-    if(timearray[2] > 59) {
-      timearray[1]++;
-      timearray[2] -= 60;
+    if(Number(timearray[2]) > 59) {
+      timearray[1] = String(Number(timearray[1]) + 1).padStart(2, '0');
+      timearray[2] = String(Number(timearray[2]) - 60).padStart(2, '0');
+      if(Number(timearray[1]) > 59) {
+        timearray[0] = String(Number(timearray[0]) + 1).padStart(2, '0');
+        timearray[1] = String(Number(timearray[1]) - 60).padStart(2, '0');
+      }
     }
+    
     console.log('変更後：' + timearray);
+    
     if (ws.readyState === WebSocket.OPEN) {
-      ws.send('now@' + Number(timearray.join('')));
+      ws.send('now@' + timearray.join(''));
     } else {
       alert("Connection Stopped");
     }
