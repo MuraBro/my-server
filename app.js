@@ -1008,7 +1008,7 @@ ws.onmessage = (event) => {
   console.log("Received:", event.data);
   if(event.data.split('@')[0] === 'qia' && mode === 3)  {
     if(ws.readyState === WebSocket.OPEN) {
-      ws.send('train@' + info);
+      ws.send('train@' + infolist.join(','));
     } else {
       alert('接続切断');
     }
