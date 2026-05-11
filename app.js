@@ -1201,6 +1201,19 @@ timesetter.addEventListener('click', () => {
   
 });
 
+document.getElementById('gotoprogress').addEventListener('click', () => {
+  if(prompt('パスワードを入力してください') === 'parupiko55') {
+    
+    input.disabled = false;
+    submitter.disabled = false;
+    renew.disabled = false;
+    alert('プログレスモードを開始しました。');
+  }else {
+    alert('お前には無理じゃ');
+  }
+  
+})
+
 setInterval(() => {
   if(mode === 3 && timegoesauto === 1) {
     console.log('時刻変更します');

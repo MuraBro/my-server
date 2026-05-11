@@ -230,6 +230,9 @@ img{
 #departbut{
     background:#1c9eff;
 }
+#departbut{
+    background:#f0cc01;
+}
 
 /* hover */
 
@@ -243,6 +246,10 @@ img{
 
 #departbut:hover{
     background:#42b1ff;
+}
+
+#departbut:hover{
+    background:#ffdd00;
 }
 
 /* ===== 出力 ===== */
@@ -328,9 +335,9 @@ label[for="manualtime"]{
   <div id="main">
     <img src="logoone.png" alt="kibi">
   <p class="l" id="output">439</p>
-  <input id="input" type="text" width="600" placeholder="ここに送信するコードを入力">
-  <button id="submitswitch">送信</button>
-  <button id="renew">更新</button>
+  <input id="input" type="text" width="600" placeholder="ここに送信するコードを入力" disabled>
+  <button id="submitswitch" disabled>送信</button>
+  <button id="renew" disabled>更新</button>
   <p class="l" id="currentsta" >上小田井</p>
   <p class="l" id="mycode">042</p>
   <p class="l" id="myrole">駅員</p>
@@ -348,6 +355,7 @@ label[for="manualtime"]{
   <button class="all" id="button" >ReadyGo</button>
   <button class="two" id="stopbut">電車を停車させる／出庫させる</button>
   <button class="eki" id="departbut">電車を発車させる</button>
+  <button class="two" id="gotoprogress">プログレスモード</button>
   </div>
   <div id="shako"></div>
   </div>
