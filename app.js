@@ -176,8 +176,22 @@ function sortWithPair(A, B) {
 }
 
 
+              //A現在時刻　B発車時刻
+function diffTime(a, b) {
+  const ah = Number(a.slice(0, 2));
+  const am = Number(a.slice(2, 4));
 
+  const bh = Number(b.slice(0, 2));
+  const bm = Number(b.slice(2, 4));
 
+  const totalA = ah * 60 + am;
+  const totalB = bh * 60 + bm;
+
+  return totalB - totalA;
+}
+
+console.log(diffTime("1313", "1318")); // 5
+console.log(diffTime("2103", "2059")); // -4
 
 
 
@@ -529,11 +543,11 @@ const investigatesituation = (modeanan) => {
       shower.passstop.textContent = '停車'
       shower.passstop.style.color = '#f9ff45';
     }
-    if((arrivaltime - Math.floor(currenttime / 100)) < 0) {
-      shower.nokori.textContent = '遅延 あと' + (arrivaltime - Math.floor(currenttime / 100)) + '分';
+    if(diffTime(Math.floor(currenttime / 100), arrivaltime) < 0) {
+      shower.nokori.textContent = '遅延 あと' + diffTime(Math.floor(currenttime / 100), arrivaltime) + '分';
       shower.nokori.style.color = 'rgb(223, 40, 40)';
     } else {
-      shower.nokori.textContent = 'あと' + (arrivaltime - Math.floor(currenttime / 100)) + '分';
+      shower.nokori.textContent = 'あと' + diffTime(Math.floor(currenttime / 100), arrivaltime) + '分';
       shower.nokori.style.color = 'rgb(232, 165, 70)';
     }
     if(arrivalstatus === '0') {
