@@ -27,7 +27,7 @@
 
 
 
-//ネットワーク設定
+//ネットワー-ク設定
 let ws;
 function connect() {
     ws = new WebSocket("wss://my-server-ja61.onrender.com");
@@ -105,7 +105,7 @@ let infolist = [];
 const stationlist = {
     station:['伏見', '大須観音', '上前津', '鶴舞', '荒畑', '御器所', '川名', 'いりなか', '八事', '塩釜口', '植田', '原', '平針', '赤池', '日進', '米野木', '黒笹', '三好ヶ丘', '浄水', '上豊田', '梅坪', '豊田市'],
 }
-let deforuto = '201A;2;普通;伏見;赤池;9;10;1,202E;2;急行;伏見;豊田市;3;3;0,203;2;普通;鶴舞;原;0;0;7,118A;1;普通;植田;いりなか;11;10;1,205;2;普通;鶴舞;原;15;16;1';
+let deforuto = '201A;2;普通;伏見;赤池;0;0;0,202E;2;急行;伏見;豊田市;0;0;0,203;2;普通;鶴舞;原;0;0;0,118A;1;普通;植田;いりなか;0;0;0,205;2;普通;鶴舞;原;0;0;0';
 let info = deforuto; //初期値
 let arrivaltime, arrivialexlc, arrivaldest, arrivalnum, arrivalbehind, arrivalbeyond, arrivalstatus, arrivalfrom;
 let timegoesauto = 0;
@@ -550,7 +550,10 @@ const investigatesituation = (modeanan) => {
       shower.nokori.textContent = 'あと' + diffTime(String(Math.floor(currenttime / 100)), String(arrivaltime)) + '分';
       shower.nokori.style.color = 'rgb(232, 165, 70)';
     }
-    if(arrivalstatus === '0') {
+    if(stationlist.station[arrivalbehind - 1] === '0' && stationlist.station[arrivalbeyond - 1] === '0'){
+      shower.traincurrency.textContent = '現在：未出発';
+    }
+    else if(arrivalstatus === '0') {
       shower.traincurrency.textContent = '現在：' + stationlist.station[arrivalbeyond - 1] + 'に停車中';
     } else if(arrivalstatus === '1') {
       shower.traincurrency.textContent = '現在：' + stationlist.station[arrivalbehind - 1] + '→' + stationlist.station[arrivalbeyond - 1] + ' を走行中';
@@ -964,6 +967,7 @@ let partsofinfolist = ijiruinfolist[wherechange].split(';');
   ijiruinfolist[wherechange] = partsofinfolist.join(';');
   return ijiruinfolist.join(',');
 }
+
 
 
 
