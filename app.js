@@ -238,6 +238,7 @@ const buildtimetablers = (list, num, direct) => {
     //列車の項目を分けます
     let bykoumoku = bytrain[chiko].split(';');
     //ある列車の時刻だけ抽出（文字列）
+    console.log(bykoumoku);
     onlytime.push(bykoumoku[9].split('/'));
     //ある列車の列車番号
     onlytrainnum.push(bykoumoku[0].trim());
