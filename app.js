@@ -937,7 +937,7 @@ if(mode === 3) {
 
 
 
-
+let [departuretime, departurenum] = buildtimetablers(diagram, choker, boundfor);
 
 
 
@@ -1063,7 +1063,7 @@ ws.onerror = (e) => {
 
 //データ送信
 
-let [departuretime, departurenum] = buildtimetablers(diagram, choker, boundfor);
+
 const countup = () => {
   /*
     if(localcount !== 0) {
