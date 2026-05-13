@@ -233,7 +233,9 @@ img{
 #gotoprogress{
     background:#f0cc01;
 }
-
+#resolve{
+    background:#702087;
+}
 /* hover */
 
 #button:hover{
@@ -250,6 +252,9 @@ img{
 
 #gotoprogress:hover{
     background:#ffdd00;
+}
+#resolve:hover{
+    background:#a126c3;
 }
 
 /* ===== 出力 ===== */
@@ -314,6 +319,12 @@ label[for="manualtime"]{
     left:930px;
     padding:8px 16px;
 }
+#timeset{
+    position:absolute;
+    top:18px;
+    left:970px;
+    padding:8px 16px;
+}
     </style>
     <title>TRTCOS - Tsurumai Line Train Communication & Operating Systems</title>
   </head>
@@ -329,6 +340,7 @@ label[for="manualtime"]{
 <label for="autotime" class="t"><input id="autotime" type="radio" name="automanu" class="t" value="自動"><span class="t" style="color:white">自動</span></label>
 <label for="manualtime" class="t"><input id="manualtime" type="radio" name="automanu" class="t" value="手動"><span class="t" style="color:white" checked>手動</span></label>
 <button id="timeset">時刻を設定</button>
+<button id="makelog">ログを出力</button>
 <br>
 <canvas id="canvas"></canvas>
   </div>
@@ -356,6 +368,7 @@ label[for="manualtime"]{
   <button class="two" id="stopbut">電車を停車させる／出庫させる</button>
   <button class="eki" id="departbut">電車を発車させる</button>
   <button class="two" id="gotoprogress">プログレスモード</button>
+  <button class="two" id="resolve">リゾルブモード</button>
   </div>
   <div id="shako"></div>
   </div>
