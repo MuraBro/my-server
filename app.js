@@ -14,8 +14,7 @@
 
 //へい！今日も開発お疲れ様！！！グローばru変数はws.sendされたものだよ～
 //今日の仕事内容：
-//１・terminates処理
-//2・時刻管理（intervalから）
+//１・車両留置は自分の車庫からの発車を認知できるのか問題
 
 
 
@@ -544,11 +543,11 @@ const investigatesituation = (modeanan) => {
       shower.passstop.textContent = '停車'
       shower.passstop.style.color = '#f9ff45';
     }
-    if(diffTime(String(Math.floor(currenttime / 100)), String(arrivaltime)) < 0) {
-      shower.nokori.textContent = '遅延 あと' + diffTime(String(Math.floor(currenttime / 100)), String(arrivaltime)) + '分';
+    if(diffTime(String(Math.floor(currenttime / 100)).padStart(4, '0'), String(arrivaltime).padStart(4, '0')) < 0) {
+      shower.nokori.textContent = '遅延 あと' + diffTime(String(Math.floor(currenttime / 100)).padStart(4, '0'), String(arrivaltime).padStart(4, '0')) + '分';
       shower.nokori.style.color = 'rgb(223, 40, 40)';
     } else {
-      shower.nokori.textContent = 'あと' + diffTime(String(Math.floor(currenttime / 100)), String(arrivaltime)) + '分';
+      shower.nokori.textContent = 'あと' + diffTime(String(Math.floor(currenttime / 100)).padStart(4, '0'), String(arrivaltime).padStart(4, '0')) + '分';
       shower.nokori.style.color = 'rgb(232, 165, 70)';
     }
     if(stationlist.station[arrivalbehind - 1] === '0' && stationlist.station[arrivalbeyond - 1] === '0'){
@@ -759,7 +758,7 @@ function drawStations(ctx) {
 
   // 駅名（下段：平針→豊田市）
   const bottomStations = [
-    "平針", "平針","赤池","日進","米野木","黒笹",
+    "原", "平針","赤池","日進","米野木","黒笹",
     "三好ヶ丘","浄水","上豊田","梅坪","豊田市",
   ];
 
