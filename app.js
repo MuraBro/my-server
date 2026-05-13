@@ -333,9 +333,11 @@ const buildtimetablers = (list, num, direct) => {
 //状況調査
 const investigatesituation = (modeanan) => {
   console.log('状況測定　開始！');
+  console.log(diagram);
   //変数diagramの書き換え
   let bytrainofdiagram = diagram.split(',');
   let newbytrainofdiagram = [];
+  console.log(diagram);
   if(info.trim() !== '') {
   for(let il in bytrainofdiagram) {
     let trainnum = bytrainofdiagram[il].split(';')[0];
@@ -345,6 +347,7 @@ const investigatesituation = (modeanan) => {
     let trainlogs = bytrainofdiagram[il].split(';')[8];
 
     console.log('ステータス変更開始します', il, '番目');
+    console.log(diagram);
 //    for(let ix in infolist[il].split(';')) {
       let sexananan = infolist[il].split(';')[0];
       console.log(il,'番目　ダイヤ上での次駅',  trainbeyondstation,'　送信データによる情報',  infolist[il].split(';')[6] /*これはネットからの情報 */,'時刻表とデータtrueなら不一致',  trainbeyondstation !== infolist[il].split(';')[6]);
@@ -359,6 +362,7 @@ const investigatesituation = (modeanan) => {
         if(trainbehindstation !== infolist[il].split(';')[5] || trainbeyondstation !== infolist[il].split(';')[6]|| trainstatus !== infolist[il].split(';')[7] ) {
           //ステータス変更！ここが大事。
           console.log('ステータス変更していくよ！');
+          console.log(diagram);
           trainbehindstation = infolist[il].split(';')[5];
           trainbeyondstation = infolist[il].split(';')[6];
           trainstatus = infolist[il].split(';')[7];
@@ -387,6 +391,7 @@ const investigatesituation = (modeanan) => {
     //201A;2;Loc;伏見;赤池;9;10;1,
     //201A;2;普通;伏見発;赤池ゆき;9;10;1;9999999997777766666666 ;2030/2032/2034/2036/2038/2040/2042/2044
     console.log('ダイヤグラム書き換え完了');
+    console.log(diagram);
   }
   diagram = newbytrainofdiagram.join(',');
   bytrainofdiagram = diagram.split(','); //分けなおし
