@@ -410,7 +410,7 @@ const investigatesituation = (modeanan) => {
           console.log('■豊田市方面を削除しました それは' + lastpapurika[0]);
           lastpapurika = '';
         }
-        else if(lastpapurika[1] === '1' && (Number(lastpapurika[6]) < choker || Number(lastpapurika[6]) !== 0)) {
+        else if(lastpapurika[1] === '1' && (Number(lastpapurika[6]) < choker && Number(lastpapurika[6]) !== 0)) {
           sendmemom[i] = '';
           console.log('■伏見方面を削除しました それは' + lastpapurika[0]);
           lastpapurika = '';
