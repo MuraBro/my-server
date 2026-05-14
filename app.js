@@ -919,7 +919,7 @@ drawStations(ctx);
 
 
 /////////////////////////////////////////////////////
-const myid = prompt('Enter the "System Code" on the timetable paper.');
+const myid = prompt('スタートシートに記載されている「システム機器管理番号」を入力してください。');
 shower.mycode.textContent = myid;
 
 //役職・駅を表示
