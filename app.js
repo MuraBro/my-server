@@ -419,7 +419,7 @@ const investigatesituation = (modeanan) => {
           console.log('■豊田市方面を削除しました それは' + lastpapurika[0]);
           lastpapurika = '';
         }
-        else if(lastpapurika[1] === '1' && (Number(lastpapurika[6]) < choker && Number(lastpapurika[6]) !== 0)) {
+        else if(lastpapurika[1] === '1' && (Number(lastpapurika[6]) < choker && Number(lastpapurika[6]) !== 0 && Number(lastpapurika[6]) !== 9999)) {
           sendmemom[i] = '';
           console.log('■伏見方面を削除しました それは' + lastpapurika[0]);
           lastpapurika = '';
@@ -539,8 +539,9 @@ const investigatesituation = (modeanan) => {
     tomatoma = sendmemom.join(','); //
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
-    shower.depttimes.textContent =  arrivaltime;
-    shower.trainnums.textContent = arrivalnum;
+    let chinchin = String(arrivaltime).padStart(4, '0')
+    shower.depttimes.textContent =  chinchin[0] + chinchin[1] + ':' + chinchin[2] + chinchin[3];
+    shower.trainnums.textContent = arrivalnum + '番';
     shower.trainexlc.textContent =  arrivialexlc;
     
     shower.traindestination.textContent =  arrivaldest;
@@ -592,8 +593,14 @@ const investigatesituation = (modeanan) => {
         }
         if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] === String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum) && Number(arrivaltime + '00') > currenttime) {
           nexttrainstatus = 2; //停車中
-          shower.trainapproach.textContent = '電車が到着しました';
-          shower.trainapproach.style = 'color:green;'
+          if(arrivaldest === stationlist.station[stationnum - 1]) {
+            shower.trainapproach.textContent = '電車が到着しました　この電車はこの駅が終点です　回送線に通してください';
+            shower.trainapproach.style = 'color:#a3b9e0;';
+          } else {
+            shower.trainapproach.textContent = '電車が到着しました';
+            shower.trainapproach.style = 'color:green;';
+          }
+          
           break;
         } else if(arrivalnum === bytrainofdiagram[il].split(';')[0] && bytrainofdiagram[il].split(';')[5] === String(stationnum) && bytrainofdiagram[il].split(';')[6]/* ←trainbeyondstation*/ === String(stationnum)) {
           nexttrainstatus = 3; //停車中
