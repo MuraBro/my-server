@@ -446,9 +446,14 @@ const investigatesituation = (modeanan) => {
           console.log('■ここから出発しない電車を削除しました それは' + lastpapurika[0] + '　だって' + lastpapurika[3] + ' と　' + stationlist.station[stationnum - 1] + '　は　' + lastpapurika[3] !== stationlist.station[stationnum - 1]);
           lastpapurika = '';
         }
-        else if(Number(lastpapurika[6]) > choker) {
+        else if(lastpapurika[1] === '2' && Number(lastpapurika[6]) > choker) {
           sendmemom[i] = '';
-          console.log('■行すぎぃ！！！電車を削除しました それは' + lastpapurika[0]);
+          console.log('■豊田市方面行すぎぃ！！！電車を削除しました それは' + lastpapurika[0]);
+          lastpapurika = '';
+        }
+        else if(lastpapurika[1] === '1' && (Number(lastpapurika[6]) < choker && Number(lastpapurika[6]) !== 0)) {
+          sendmemom[i] = '';
+          console.log('■伏見方面行すぎぃ！！！電車を削除しました それは' + lastpapurika[0]);
           lastpapurika = '';
         }
         else if(lastpapurika[1] !== String(boundfor)) {
