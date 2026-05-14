@@ -269,8 +269,8 @@ const buildtimetablers = (list, num, direct) => {
         
       }
       
-      console.log('非営業さ削除しないのかな？' , sc, timetabletrainnum[sc], onlytrainnum.indexOf(timetabletrainnum[sc]), onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])], onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])][choker]);
-      if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])][choker] === '6' || timetabletime[sc] === 'NaN') { //拡張時 取扱注意！欠損値を非営業として取り扱います
+      console.log('非営業さ削除しないのかな？' , onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])],);
+      if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])] === '6' || timetabletime[sc] === 'NaN') { //拡張時 取扱注意！欠損値を非営業として取り扱います
         console.log('非営業削除', timetabletrainnum[sc]);
         timetabletrainnum[sc] = 'fuck';
         timetabletime[sc] = 'fuck';//非営業削除
