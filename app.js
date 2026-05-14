@@ -14,7 +14,7 @@
 
 //へい！今日も開発お疲れ様！！！グローばru変数はws.sendされたものだよ～
 //今日の仕事内容：
-//１・車両留置は自分の車庫からの発車を認知できるのか問題
+//１・buildtimetablers　①に問題
 
 
 
@@ -259,7 +259,7 @@ const buildtimetablers = (list, num, direct) => {
 
     console.log('　　時刻表：通過時刻通りに並び替え' + timetabletime + timetabletrainnum);
 
-    
+    console.log('時刻通りの列車番号表はこんな感じ')   
     for (let sc in timetabletrainnum) {
       //bytrainでの番目を知りたい onlytrainnum.indexOf(timetabletrainnum[sc])
       if(onlytraindirect[onlytrainnum.indexOf(timetabletrainnum[sc].trim())] !== String(direct)) {
@@ -269,7 +269,8 @@ const buildtimetablers = (list, num, direct) => {
         
       }
       
-      if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])] === '6') {
+      console.log(sc, timetabletrainnum[sc], )
+      if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])] === '6' || timetabletime[sc] === 'NaN') { //拡張時 取扱注意！欠損値を非営業として取り扱います
         console.log('非営業削除', timetabletrainnum[sc]);
         timetabletrainnum[sc] = 'fuck';
         timetabletime[sc] = 'fuck';//非営業削除
