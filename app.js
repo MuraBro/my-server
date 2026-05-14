@@ -268,14 +268,16 @@ const buildtimetablers = (list, num, direct) => {
         timetabletime[sc] = 'fuck'; //方向違い削除
         
       }
-      
-      console.log('非営業さ削除しないのかな？' , sc, timetabletrainnum[sc], onlytrainnum.indexOf(timetabletrainnum[sc]), '謎の配列', onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])]);
-      if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])] === '6' || timetabletime[sc] === 'NaN') { //拡張時 取扱注意！欠損値を非営業として取り扱います
-        console.log('非営業削除', timetabletrainnum[sc]);
-        timetabletrainnum[sc] = 'fuck';
-        timetabletime[sc] = 'fuck';//非営業削除
-        
+      if(onlytrainnum.indexOf(timetabletrainnum[sc]) !== -1) {
+      console.log('非営業さ削除しないのかな？' , sc, timetabletrainnum[sc], onlytrainnum.indexOf(timetabletrainnum[sc]), '謎の配列', onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])][choker - 1]);
+            if(onlytrainstops[onlytrainnum.indexOf(timetabletrainnum[sc])][choker - 1] === '6' || timetabletime[sc] === 'NaN') { //拡張時 取扱注意！欠損値を非営業として取り扱います
+              console.log('非営業削除', timetabletrainnum[sc]);
+              timetabletrainnum[sc] = 'fuck';
+              timetabletime[sc] = 'fuck';//非営業削除
+              
+            }
       }
+      
       
       if(mode === 2 && onlytrainfrom[onlytrainnum.indexOf(timetabletrainnum[sc])] !== stationlist.station[stationnum - 1]) {
         console.log('発車しないっす', timetabletrainnum[sc]);
