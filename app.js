@@ -1181,7 +1181,12 @@ const maketraingo = () => {
 const maketrainstop = () => {
   if (ws.readyState === WebSocket.OPEN) {
     if(arrivialexlc === '急行' && exst.indexOf(Number(stationnum)) === -1) {
-      ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
+      if(boundfor === '1') {
+        ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum - 1, 1));
+      } else {
+        ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum + 1, 1));
+      }
+      
     } else {
       ws.send('train@' + buildsendingmessageandsend(arrivalnum.trim(), stationnum, stationnum, 0));
     }
