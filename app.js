@@ -431,9 +431,13 @@ const investigatesituation = (modeanan) => {
           console.log('■豊田市方面を削除しました それは' + lastpapurika[0]);
           lastpapurika = '';
         }
-        else if(lastpapurika[1] === '1' && (Number(lastpapurika[6]) < choker && Number(lastpapurika[6]) !== 0 && Number(lastpapurika[6]) !== 9999)) {
+        else if(lastpapurika[1] === '1' && (Number(lastpapurika[6]) < choker && Number(lastpapurika[6]) !== 0)) {
           sendmemom[i] = '';
           console.log('■伏見方面を削除しました それは' + lastpapurika[0]);
+          lastpapurika = '';
+        } else if(Number(lastpapurika[6]) === 9999) {
+          sendmemom[i] = '';
+          console.log('■伏見方面が通過済みなので削除しました それは' + lastpapurika[0] + 'その情報です' + lastpapurika);
           lastpapurika = '';
         }
         else if(lastpapurika[1] !== String(boundfor)) {
@@ -553,7 +557,7 @@ const investigatesituation = (modeanan) => {
     console.log('Next Train: ', arrivaltime, arrivalnum, arrivialexlc, arrivaldest);
     let chinchin = String(arrivaltime).padStart(4, '0')
     shower.depttimes.textContent =  chinchin[0] + chinchin[1] + ':' + chinchin[2] + chinchin[3];
-    shower.trainnums.textContent = arrivalnum + '番';
+    shower.trainnums.textContent = arrivalnum;
     shower.trainexlc.textContent =  arrivialexlc;
     
     shower.traindestination.textContent =  arrivaldest;
@@ -1060,7 +1064,7 @@ ws.onmessage = (event) => {
   } else {
     info = event.data
   let headerinvestigater = info.split('@');
-  if(headerinvestigater[0] === 'train') {
+  if(headerinvestigater[0] === 'train' && info !== '') {
     output.textContent = info;
   }
   console.log(headerinvestigater, headerinvestigater[0]);
