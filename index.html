@@ -236,6 +236,9 @@ img{
 #resolve{
     background:#702087;
 }
+#circular{
+    background:rgb(35, 155, 35);
+}
 /* hover */
 
 #button:hover{
@@ -255,6 +258,9 @@ img{
 }
 #resolve:hover{
     background:#a126c3;
+}
+#circular:hover{
+    background: rgb(30, 205, 30);
 }
 
 /* ===== 出力 ===== */
@@ -325,6 +331,12 @@ label[for="manualtime"]{
     left:1100px;
     padding:8px 16px;
 }
+#circular{
+    position:absolute;
+    top:18px;
+    left:1270px;
+    padding:8px 16px;
+}
     </style>
     <title>TRTCOS - Tsurumai Line Train Communication & Operating Systems</title>
   </head>
@@ -369,6 +381,7 @@ label[for="manualtime"]{
   <button class="eki" id="departbut">電車を発車させる</button>
   <button class="two" id="gotoprogress">プログレスモード</button>
   <button class="two" id="resolve">リゾルブモード</button>
+  <button class="two" id="circular">サーキュラーモード</button>
   </div>
   <div id="shako"></div>
   </div>
